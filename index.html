@@ -1,0 +1,1481 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plan de Desarrollo Municipal – Gachancipá 2024–2027</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <!-- DataTables -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+  <!-- Custom styles -->
+  <style>
+/* ══════════════════════════════════════════════════════════
+   PLAN DE DESARROLLO GACHANCIPÁ 2024-2027
+   Dashboard Ejecutivo — styles.css
+   Paleta: Azul Institucional / Verde / Dorado / Gris claro
+══════════════════════════════════════════════════════════ */
+
+/* ── TOKENS ── */
+:root {
+  --blue-dark: #0B3C5D;
+  --blue-mid:  #1A6FB5;
+  --blue-light:#E8F1FA;
+  --green:     #2E8B57;
+  --green-light:#E6F4EC;
+  --gold:      #D4AF37;
+  --gold-light:#FBF5DC;
+  --red:       #C0392B;
+  --gray-bg:   #F5F7FA;
+  --gray-card: #FFFFFF;
+  --gray-border:#DDE3EC;
+  --gray-text: #4A5568;
+  --gray-muted:#8A93A6;
+  --shadow-sm: 0 2px 8px rgba(11,60,93,.08);
+  --shadow-md: 0 4px 18px rgba(11,60,93,.12);
+  --shadow-lg: 0 8px 32px rgba(11,60,93,.15);
+  --radius:    10px;
+  --radius-lg: 16px;
+  --font-sans: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-mono: 'Consolas', monospace;
+  --transition: .22s cubic-bezier(.4,0,.2,1);
+}
+
+[data-theme="dark"] {
+  --blue-dark: #1A6FB5;
+  --blue-light:#0D2035;
+  --green-light:#0D2518;
+  --gold-light: #2A2408;
+  --gray-bg:   #0F1724;
+  --gray-card: #182234;
+  --gray-border:#253550;
+  --gray-text: #C9D6E8;
+  --gray-muted:#637590;
+  --shadow-sm: 0 2px 8px rgba(0,0,0,.4);
+  --shadow-md: 0 4px 18px rgba(0,0,0,.5);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,.6);
+}
+
+/* ── BASE ── */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  font-family: var(--font-sans);
+  background: var(--gray-bg);
+  color: var(--gray-text);
+  margin: 0;
+  min-height: 100vh;
+  transition: background var(--transition), color var(--transition);
+}
+
+/* ── LOADER ── */
+.loader-overlay {
+  position: fixed; inset: 0; z-index: 9999;
+  background: var(--blue-dark);
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column;
+  transition: opacity .4s;
+}
+.loader-overlay.hidden { opacity: 0; pointer-events: none; }
+
+.loader-box { text-align: center; }
+.loader-escudo {
+  font-size: 4rem; color: var(--gold);
+  animation: pulse 1.4s ease-in-out infinite;
+  display: block; margin-bottom: 1rem;
+}
+.loader-text {
+  color: #fff; font-size: 1.1rem; letter-spacing:.05em;
+  margin-bottom: 1.5rem;
+}
+.loader-bar {
+  width: 260px; height: 4px; background: rgba(255,255,255,.2);
+  border-radius: 4px; overflow: hidden;
+}
+.loader-bar-fill {
+  height: 100%; background: var(--gold);
+  animation: loadBar 1.8s ease-in-out forwards;
+  border-radius: 4px;
+}
+@keyframes loadBar { from { width:0 } to { width:100% } }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.6} }
+
+/* ── HEADER ── */
+.gov-header {
+  background: linear-gradient(135deg, var(--blue-dark) 0%, #0E4F7D 100%);
+  color: #fff;
+  padding: .9rem 1.5rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,.25);
+  position: sticky; top: 0; z-index: 100;
+}
+
+.logo-placeholder {
+  width: 52px; height: 52px; border-radius: 50%;
+  background: rgba(255,255,255,.15);
+  border: 2px solid var(--gold);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem; color: var(--gold);
+  flex-shrink: 0;
+}
+
+.header-title {
+  font-size: 1.05rem; font-weight: 700; line-height: 1.2;
+  letter-spacing: .01em;
+}
+.header-subtitle {
+  font-size: .75rem; opacity: .8; letter-spacing: .08em;
+  text-transform: uppercase; margin-top: 2px;
+}
+
+.update-badge {
+  font-size: .78rem; background: rgba(255,255,255,.12);
+  padding: .25rem .7rem; border-radius: 20px;
+  border: 1px solid rgba(255,255,255,.2);
+}
+
+.status-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: #34D399;
+  box-shadow: 0 0 0 3px rgba(52,211,153,.3);
+  animation: statusPulse 2s ease-in-out infinite;
+}
+@keyframes statusPulse { 0%,100%{box-shadow:0 0 0 3px rgba(52,211,153,.3)} 50%{box-shadow:0 0 0 6px rgba(52,211,153,.1)} }
+
+/* ── BUTTONS ── */
+.btn-gov {
+  display: inline-flex; align-items: center;
+  padding: .38rem .85rem; border-radius: 6px;
+  font-size: .83rem; font-weight: 600; cursor: pointer;
+  border: none; transition: all var(--transition);
+  text-decoration: none; white-space: nowrap;
+}
+.btn-gov.btn-sm { padding: .25rem .6rem; font-size: .78rem; }
+.btn-gov-primary { background: var(--blue-mid); color:#fff; }
+.btn-gov-primary:hover { background: #145D99; color:#fff; transform:translateY(-1px); box-shadow: var(--shadow-sm); }
+.btn-gov-green { background: var(--green); color:#fff; }
+.btn-gov-green:hover { background: #236A43; color:#fff; transform:translateY(-1px); }
+.btn-gov-gold { background: var(--gold); color: var(--blue-dark); }
+.btn-gov-gold:hover { background: #B8962F; color: var(--blue-dark); transform:translateY(-1px); }
+.btn-gov-ghost {
+  background: rgba(255,255,255,.12); color:#fff;
+  border: 1px solid rgba(255,255,255,.25);
+}
+.btn-gov-ghost:hover { background: rgba(255,255,255,.22); color:#fff; }
+
+[data-theme="dark"] .btn-gov-ghost {
+  background: rgba(255,255,255,.08); color: var(--gray-text);
+  border-color: var(--gray-border);
+}
+[data-theme="dark"] .btn-gov-ghost:hover { background: rgba(255,255,255,.14); }
+
+/* ── BREADCRUMB ── */
+.breadcrumb-bar {
+  background: var(--gray-card);
+  border-bottom: 1px solid var(--gray-border);
+  padding: .5rem 1.5rem;
+}
+.breadcrumb { font-size: .8rem; margin:0; }
+.breadcrumb-item.active { color: var(--blue-dark); font-weight: 600; }
+
+/* ── FILTER BAR ── */
+.filter-bar {
+  background: var(--gray-card);
+  border-bottom: 2px solid var(--gray-border);
+  padding: .7rem 1.5rem;
+  box-shadow: var(--shadow-sm);
+}
+.filter-group { display:flex; flex-direction:column; gap:.2rem; }
+.filter-label {
+  font-size: .72rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .06em; color: var(--gray-muted);
+}
+.filter-select {
+  padding: .32rem .7rem; border-radius: 6px;
+  border: 1.5px solid var(--gray-border);
+  background: var(--gray-bg); color: var(--gray-text);
+  font-size: .83rem; cursor: pointer;
+  transition: border-color var(--transition);
+  min-width: 140px;
+}
+.filter-select:focus { outline: none; border-color: var(--blue-mid); }
+
+/* ── MAIN CONTENT ── */
+.main-content { padding: 1.4rem 1.5rem; }
+
+/* ── KPI GRID ── */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.4rem;
+}
+
+.kpi-card {
+  background: var(--gray-card);
+  border-radius: var(--radius);
+  padding: 1.1rem 1.2rem;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-border);
+  display: flex; gap: .9rem; align-items: flex-start;
+  transition: transform var(--transition), box-shadow var(--transition);
+  position: relative; overflow: hidden;
+}
+.kpi-card::before {
+  content:''; position:absolute; top:0; left:0;
+  width:4px; height:100%;
+  background: var(--kpi-color, var(--blue-dark));
+  transition: width var(--transition);
+}
+.kpi-card:hover { transform:translateY(-3px); box-shadow: var(--shadow-md); }
+.kpi-card:hover::before { width:6px; }
+
+.kpi-card.kpi-accent {
+  background: linear-gradient(135deg, var(--blue-dark) 0%, #0E4F7D 100%);
+  color: #fff;
+  border-color: transparent;
+}
+.kpi-card.kpi-accent .kpi-label { color: rgba(255,255,255,.75); }
+.kpi-card.kpi-accent .kpi-value { color: var(--gold); }
+.kpi-card.kpi-accent .kpi-delta { color: rgba(255,255,255,.7); }
+
+.kpi-icon {
+  width: 42px; height: 42px; border-radius: 8px;
+  background: color-mix(in srgb, var(--kpi-color) 12%, transparent);
+  color: var(--kpi-color);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; flex-shrink: 0;
+}
+.kpi-card.kpi-accent .kpi-icon { background: rgba(255,255,255,.15); color: var(--gold); }
+
+.kpi-body { flex: 1; min-width: 0; }
+.kpi-label { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing:.05em; color: var(--gray-muted); margin-bottom: .25rem; }
+.kpi-value { font-size: 1.9rem; font-weight: 800; line-height: 1; color: var(--blue-dark); }
+[data-theme="dark"] .kpi-value { color: #E2EAF5; }
+.kpi-accent .kpi-value { color: var(--gold) !important; }
+.kpi-delta { font-size: .72rem; margin-top: .3rem; color: var(--gray-muted); }
+.kpi-delta.up { color: var(--green); }
+.kpi-delta.down { color: var(--red); }
+
+/* ── CHART CARDS ── */
+.charts-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.charts-row:nth-child(n+3) { grid-template-columns: 1fr 1fr; }
+
+.chart-card {
+  background: var(--gray-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-border);
+  padding: 1.1rem;
+  transition: box-shadow var(--transition);
+}
+.chart-card:hover { box-shadow: var(--shadow-md); }
+.chart-card-sm { /* inherits */ }
+.chart-card-md { /* inherits */ }
+.chart-card-lg { /* inherits */ }
+
+.chart-header {
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: .83rem; font-weight: 700; color: var(--gray-text);
+  margin-bottom: .8rem; padding-bottom: .6rem;
+  border-bottom: 1px solid var(--gray-border);
+}
+.chart-badge {
+  font-size: .7rem; padding: .18rem .55rem;
+  background: var(--blue-light); color: var(--blue-mid);
+  border-radius: 20px; font-weight: 700;
+}
+[data-theme="dark"] .chart-badge { background: rgba(26,111,181,.3); }
+
+.text-gold  { color: var(--gold) !important; }
+.text-green { color: var(--green) !important; }
+.text-blue  { color: var(--blue-mid) !important; }
+
+/* ── TABLE ── */
+#tablaEjecutiva thead th {
+  background: var(--blue-dark); color: #fff;
+  font-size: .75rem; text-transform: uppercase; letter-spacing: .05em;
+  white-space: nowrap; position: sticky; top: 0;
+  border-color: rgba(255,255,255,.2);
+}
+[data-theme="dark"] #tablaEjecutiva { color: var(--gray-text); }
+[data-theme="dark"] #tablaEjecutiva tbody tr { background: var(--gray-card); }
+[data-theme="dark"] #tablaEjecutiva tbody tr:nth-child(even) { background: var(--gray-bg); }
+
+.badge-prog { background: var(--green-light); color: var(--green); font-size: .72rem; padding: .2rem .5rem; border-radius:4px; font-weight:700; }
+.badge-noprog { background: var(--gold-light); color: #9A7D1A; font-size: .72rem; padding: .2rem .5rem; border-radius:4px; font-weight:700; }
+.badge-cumplida { background: var(--green-light); color: var(--green); font-size:.7rem; padding:.18rem .45rem; border-radius:4px; font-weight:700; }
+.badge-ejecucion { background: var(--blue-light); color: var(--blue-mid); font-size:.7rem; padding:.18rem .45rem; border-radius:4px; font-weight:700; }
+.badge-sininicio { background:#FDE8E8; color:var(--red); font-size:.7rem; padding:.18rem .45rem; border-radius:4px; font-weight:700; }
+
+.progress-mini {
+  height: 6px; background: var(--gray-border); border-radius:3px; overflow:hidden;
+  margin-top: 3px; min-width: 70px;
+}
+.progress-mini-fill { height:100%; border-radius:3px; transition: width .5s; }
+
+/* ── FOOTER ── */
+.gov-footer {
+  background: var(--blue-dark);
+  color: rgba(255,255,255,.7);
+  font-size: .75rem;
+  padding: .9rem 1.5rem;
+  margin-top: 2rem;
+}
+.gov-footer strong { color: var(--gold); }
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--gray-bg); }
+::-webkit-scrollbar-thumb { background: var(--gray-border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gray-muted); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1100px) {
+  .charts-row { grid-template-columns: 1fr 1fr !important; }
+}
+@media (max-width: 700px) {
+  .charts-row { grid-template-columns: 1fr !important; }
+  .kpi-grid { grid-template-columns: 1fr 1fr; }
+  .gov-header .d-flex { flex-direction:column; align-items:flex-start; }
+}
+
+/* ── DARK TABLE ── */
+[data-theme="dark"] .table-striped > tbody > tr:nth-of-type(odd) > * { background: rgba(255,255,255,.03); }
+[data-theme="dark"] .dataTables_wrapper .dataTables_filter input { background: var(--gray-bg); color: var(--gray-text); border-color: var(--gray-border); }
+[data-theme="dark"] .dataTables_wrapper .dataTables_length select { background: var(--gray-bg); color: var(--gray-text); border-color: var(--gray-border); }
+[data-theme="dark"] .dataTables_wrapper { color: var(--gray-text); }
+[data-theme="dark"] .page-item .page-link { background: var(--gray-bg); color: var(--gray-text); border-color: var(--gray-border); }
+
+/* ── PLOTLY DARK OVERRIDE ── */
+[data-theme="dark"] .js-plotly-plot .plotly .bg { fill: var(--gray-card) !important; }
+
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════ LOADER ═══════════════════════ -->
+<div id="loader" class="loader-overlay">
+  <div class="loader-box">
+    <div class="loader-escudo">
+      <i class="bi bi-shield-fill-check"></i>
+    </div>
+    <div class="loader-text">Cargando Plan de Desarrollo…</div>
+    <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════ HEADER ═══════════════════════ -->
+<header class="gov-header">
+  <div class="container-fluid">
+    <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+
+      <div class="d-flex align-items-center gap-3">
+        <div class="logo-placeholder">
+          <i class="bi bi-shield-fill-check"></i>
+        </div>
+        <div>
+          <div class="header-title">Plan de Desarrollo de Gachancipá — Cundinamarca</div>
+          <div class="header-subtitle">MI COMPROMISO ES GACHANCIPÁ 2024–2027</div>
+        </div>
+      </div>
+
+      <div class="d-flex align-items-center gap-2 flex-wrap">
+        <span class="update-badge">
+          <i class="bi bi-clock me-1"></i>
+          Actualizado: <span id="updateDate">23 Jun 2026</span>
+        </span>
+        <div class="status-dot" id="statusDot" title="Datos cargados"></div>
+
+        <button class="btn-gov btn-gov-ghost" id="darkToggle" title="Cambiar tema">
+          <i class="bi bi-moon-stars-fill"></i>
+        </button>
+        <button class="btn-gov btn-gov-gold" id="exportPdfBtn">
+          <i class="bi bi-file-earmark-pdf me-1"></i>PDF
+        </button>
+        <button class="btn-gov btn-gov-green" id="exportExcelBtn">
+          <i class="bi bi-file-earmark-excel me-1"></i>Excel
+        </button>
+      </div>
+
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════════════ BREADCRUMB ═══════════════════════ -->
+<div class="breadcrumb-bar">
+  <div class="container-fluid">
+    <nav>
+      <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><i class="bi bi-house-door me-1"></i>Municipio</li>
+        <li class="breadcrumb-item">Plan de Desarrollo</li>
+        <li class="breadcrumb-item active">Seguimiento Indicativo</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<!-- ═══════════════════════ FILTER BAR ═══════════════════════ -->
+<div class="filter-bar">
+  <div class="container-fluid">
+    <div class="d-flex align-items-center flex-wrap gap-3">
+
+      <div class="filter-group">
+        <label class="filter-label"><i class="bi bi-calendar3 me-1"></i>Vigencia</label>
+        <select class="filter-select" id="fAnio">
+          <option value="todos">Todas</option>
+          <option value="2024" selected>2024</option>
+          <option value="2025">2025</option>
+          <option value="2026">2026</option>
+          <option value="2027">2027</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label class="filter-label"><i class="bi bi-calendar-week me-1"></i>Trimestre</label>
+        <select class="filter-select" id="fTrimestre">
+          <option value="todos">Todos</option>
+          <option value="T1">T1</option>
+          <option value="T2">T2</option>
+          <option value="T3">T3</option>
+          <option value="T4">T4</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label class="filter-label"><i class="bi bi-building me-1"></i>Secretaría</label>
+        <select class="filter-select" id="fSecretaria">
+          <option value="todas">Todas</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label class="filter-label"><i class="bi bi-flag me-1"></i>Estado Meta</label>
+        <select class="filter-select" id="fEstado">
+          <option value="todos">Todos</option>
+          <option value="P">Programada</option>
+          <option value="NP">No Programada</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label class="filter-label"><i class="bi bi-diagram-3 me-1"></i>Eje Estratégico</label>
+        <select class="filter-select" id="fEje">
+          <option value="todos">Todos</option>
+        </select>
+      </div>
+
+      <button class="btn-gov btn-gov-ghost ms-auto" id="resetFilters">
+        <i class="bi bi-arrow-counterclockwise me-1"></i>Restablecer
+      </button>
+      <button class="btn-gov btn-gov-primary" id="refreshBtn">
+        <i class="bi bi-arrow-repeat me-1"></i>Actualizar
+      </button>
+
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════ MAIN CONTENT ═══════════════════════ -->
+<main class="main-content">
+  <div class="container-fluid">
+
+    <!-- ── KPI CARDS ── -->
+    <div class="kpi-grid" id="kpiGrid">
+      <div class="kpi-card" id="kpi-total">
+        <div class="kpi-icon" style="--kpi-color:#0B3C5D"><i class="bi bi-list-check"></i></div>
+        <div class="kpi-body">
+          <div class="kpi-label">Total Metas</div>
+          <div class="kpi-value" id="kTotal">—</div>
+          <div class="kpi-delta" id="kTotalDelta"></div>
+        </div>
+      </div>
+      <div class="kpi-card" id="kpi-prog">
+        <div class="kpi-icon" style="--kpi-color:#2E8B57"><i class="bi bi-check-circle-fill"></i></div>
+        <div class="kpi-body">
+          <div class="kpi-label">Programadas</div>
+          <div class="kpi-value" id="kProg">—</div>
+          <div class="kpi-delta" id="kProgDelta"></div>
+        </div>
+      </div>
+      <div class="kpi-card" id="kpi-noprog">
+        <div class="kpi-icon" style="--kpi-color:#D4AF37"><i class="bi bi-exclamation-circle-fill"></i></div>
+        <div class="kpi-body">
+          <div class="kpi-label">No Programadas</div>
+          <div class="kpi-value" id="kNoProg">—</div>
+          <div class="kpi-delta" id="kNoProgDelta"></div>
+        </div>
+      </div>
+      <div class="kpi-card" id="kpi-cumplidas">
+        <div class="kpi-icon" style="--kpi-color:#1B8A6B"><i class="bi bi-trophy-fill"></i></div>
+        <div class="kpi-body">
+          <div class="kpi-label">Cumplidas ≥90%</div>
+          <div class="kpi-value" id="kCumplidas">—</div>
+          <div class="kpi-delta" id="kCumplidasDelta"></div>
+        </div>
+      </div>
+      <div class="kpi-card" id="kpi-ejecucion">
+        <div class="kpi-icon" style="--kpi-color:#1A6FB5"><i class="bi bi-arrow-repeat"></i></div>
+        <div class="kpi-body">
+          <div class="kpi-label">En Ejecución</div>
+          <div class="kpi-value" id="kEjecucion">—</div>
+          <div class="kpi-delta" id="kEjecucionDelta"></div>
+        </div>
+      </div>
+      <div class="kpi-card kpi-accent" id="kpi-avance">
+        <div class="kpi-icon" style="--kpi-color:#D4AF37"><i class="bi bi-speedometer2"></i></div>
+        <div class="kpi-body">
+          <div class="kpi-label">Avance General</div>
+          <div class="kpi-value" id="kAvance">—</div>
+          <div class="kpi-delta" id="kAvanceDelta"></div>
+        </div>
+      </div>
+      <div class="kpi-card" id="kpi-sininicio">
+        <div class="kpi-icon" style="--kpi-color:#C0392B"><i class="bi bi-x-circle-fill"></i></div>
+        <div class="kpi-body">
+          <div class="kpi-label">Sin Iniciar (0%)</div>
+          <div class="kpi-value" id="kSinInicio">—</div>
+          <div class="kpi-delta" id="kSinInicioDelta"></div>
+        </div>
+      </div>
+      <div class="kpi-card" id="kpi-secretarias">
+        <div class="kpi-icon" style="--kpi-color:#7D3C98"><i class="bi bi-building-gear"></i></div>
+        <div class="kpi-body">
+          <div class="kpi-label">Secretarías</div>
+          <div class="kpi-value" id="kSecretarias">—</div>
+          <div class="kpi-delta" id="kSecretariasDelta"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── ROW 1: Gauge + Donut + Barras avance ── -->
+    <div class="charts-row">
+      <div class="chart-card chart-card-sm" id="chartGaugeWrap">
+        <div class="chart-header">
+          <span><i class="bi bi-speedometer2 me-2 text-gold"></i>Avance General del Plan</span>
+          <span class="chart-badge" id="gaugeBadge">2024</span>
+        </div>
+        <div id="chartGauge"></div>
+      </div>
+
+      <div class="chart-card chart-card-sm" id="chartDonutWrap">
+        <div class="chart-header">
+          <span><i class="bi bi-pie-chart-fill me-2 text-green"></i>Estado de las Metas</span>
+          <span class="chart-badge" id="donutBadge">2024</span>
+        </div>
+        <div id="chartDonut"></div>
+      </div>
+
+      <div class="chart-card chart-card-lg" id="chartBarrasHWrap">
+        <div class="chart-header">
+          <span><i class="bi bi-bar-chart-horizontal-fill me-2 text-blue"></i>Avance por Secretaría</span>
+          <span class="chart-badge" id="barrasHBadge">2024</span>
+        </div>
+        <div id="chartBarrasH"></div>
+      </div>
+    </div>
+
+    <!-- ── ROW 2: Línea temporal + Barras apiladas ── -->
+    <div class="charts-row">
+      <div class="chart-card chart-card-md" id="chartLineaWrap">
+        <div class="chart-header">
+          <span><i class="bi bi-graph-up-arrow me-2 text-gold"></i>Evolución Trimestral por Vigencia</span>
+        </div>
+        <div id="chartLinea"></div>
+      </div>
+
+      <div class="chart-card chart-card-md" id="chartApiladoWrap">
+        <div class="chart-header">
+          <span><i class="bi bi-bar-chart-fill me-2 text-blue"></i>Programadas vs No Programadas por Secretaría</span>
+        </div>
+        <div id="chartApilado"></div>
+      </div>
+    </div>
+
+    <!-- ── ROW 3: Treemap + Heatmap ── -->
+    <div class="charts-row">
+      <div class="chart-card chart-card-md" id="chartTreemapWrap">
+        <div class="chart-header">
+          <span><i class="bi bi-grid-fill me-2 text-green"></i>Distribución por Eje Estratégico y Secretaría</span>
+        </div>
+        <div id="chartTreemap"></div>
+      </div>
+
+      <div class="chart-card chart-card-md" id="chartHeatmapWrap">
+        <div class="chart-header">
+          <span><i class="bi bi-grid-3x3-gap-fill me-2 text-gold"></i>Cumplimiento por Secretaría y Trimestre</span>
+        </div>
+        <div id="chartHeatmap"></div>
+      </div>
+    </div>
+
+    <!-- ── TABLA EJECUTIVA ── -->
+    <div class="chart-card" id="tablaWrap">
+      <div class="chart-header d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <span><i class="bi bi-table me-2 text-blue"></i>Tabla Ejecutiva de Metas</span>
+        <div class="d-flex gap-2">
+          <button class="btn-gov btn-gov-ghost btn-sm" id="tblExportCsv">
+            <i class="bi bi-filetype-csv me-1"></i>CSV
+          </button>
+          <button class="btn-gov btn-gov-ghost btn-sm" id="tblExportExcel">
+            <i class="bi bi-file-earmark-excel me-1"></i>Excel
+          </button>
+          <button class="btn-gov btn-gov-ghost btn-sm" id="tblExportPdf">
+            <i class="bi bi-file-pdf me-1"></i>PDF
+          </button>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table id="tablaEjecutiva" class="table table-striped table-hover w-100" style="font-size:0.82rem">
+          <thead>
+            <tr>
+              <th>Eje</th>
+              <th>Secretaría</th>
+              <th>Programa</th>
+              <th>Producto</th>
+              <th>Meta</th>
+              <th>Vigencia</th>
+              <th>Estado</th>
+              <th>Planeado</th>
+              <th>Ejecutado</th>
+              <th>% Avance</th>
+              <th>Clasificación</th>
+              <th>Logros</th>
+            </tr>
+          </thead>
+          <tbody id="tablaBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div><!-- /container-fluid -->
+</main>
+
+<!-- ═══════════════════════ FOOTER ═══════════════════════ -->
+<footer class="gov-footer">
+  <div class="container-fluid d-flex justify-content-between align-items-center flex-wrap gap-2">
+    <span><strong>Municipio de Gachancipá</strong> — Cundinamarca · NIT 899.999.239-0</span>
+    <span>Plan de Desarrollo 2024–2027 | PSP-130-2026 | Versión 4.0</span>
+    <span>© 2026 Alcaldía Municipal de Gachancipá</span>
+  </div>
+</footer>
+
+<!-- ═══════════════════════ SCRIPTS ═══════════════════════ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+const PLAN_DATA_COMPACT = [{"e":1,"s":"Secretaría de Gobierno","p":"1. La seguridad es compromiso de todos","pr":"Servicio de apoyo para el acceso a la justicia policiva","m4":"Diseñar, ejecutar y construir una un proyecto de 500 soluciones de vivienda en e","m5":"Ampliar el número de efectivos en el municipio en un 20%","a4":90.0,"a5":100.0,"pl4":10.0,"ej4":9.0,"pl5":2.0,"ej5":2.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":3.0,"t3e4":3.0,"t4p4":7.0,"t4e4":6.0,"t1p5":0.0,"t1e5":0.0,"t2p5":2.0,"t2e5":2.0,"t3p5":0.0,"t3e5":0.0},{"e":1,"s":"Secretaría de Gobierno","p":"1. La seguridad es compromiso de todos","pr":"Servicio de apoyo para el acceso a la justicia policiva","m4":"Diseñar, ejecutar y poner en marcha un programa dirigido al mejoramiento de vivi","m5":"Crear el observatorio de seguridad del municipio","a4":100.0,"a5":0.0,"pl4":10.0,"ej4":10.0,"pl5":1.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":3.0,"t3e4":3.0,"t4p4":7.0,"t4e4":7.0,"t1p5":1.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":1,"s":"Secretaría de Gobierno","p":"1. La seguridad es compromiso de todos","pr":"Servicio información implementado","m4":"Ejecutar los planes parciales del municipio","m5":"Mejorar un el centro monitoreo.","a4":100.0,"a5":100.0,"pl4":8.0,"ej4":8.0,"pl5":19.0,"ej5":19.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":7.0,"t3e4":7.0,"t4p4":1.0,"t4e4":1.0,"t1p5":19.0,"t1e5":19.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":1,"s":"Secretaría de Gobierno","p":"1. La seguridad es compromiso de todos","pr":"Servicio de apoyo para el acceso a la justicia policiva","m4":"Crear, diseñar y ejecutar programas de embellecimiento en el municipio","m5":"Adquirir un dron en el municipio.","a4":100.0,"a5":0.0,"pl4":10.0,"ej4":10.0,"pl5":1.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":3.0,"t3e4":3.0,"t4p4":7.0,"t4e4":7.0,"t1p5":1.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":1,"s":"Secretaría de Gobierno","p":"1. La seguridad es compromiso de todos","pr":"Servicio de asistencia técnica","m4":"Diseñar, ejecutar y adoptar planos tipo para construcción en el sector rural","m5":"Crear un/unos programas/programas dirigidos a la seguridad y convivencia ciudada","a4":100.0,"a5":100.0,"pl4":20.0,"ej4":20.0,"pl5":1.0,"ej5":1.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":10.0,"t3e4":10.0,"t4p4":10.0,"t4e4":10.0,"t1p5":1.0,"t1e5":1.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":1,"s":"Secretaría de Gobierno","p":"1. La seguridad es compromiso de todos","pr":"Servicio de apoyo para el acceso a la justicia policiva","m4":"200 unidades legalizadas","m5":"Realizar operativos periódicos en las zonas de mayor presencia de contravencione","a4":80.0,"a5":100.0,"pl4":25.0,"ej4":20.0,"pl5":36.0,"ej5":36.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":10.0,"t3e4":10.0,"t4p4":15.0,"t4e4":10.0,"t1p5":36.0,"t1e5":36.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":1,"s":"Secretaría de Gobierno","p":"1. La seguridad es compromiso de todos","pr":"Servicio de apoyo para el acceso a la justicia policiva","m4":"Presentar un proyecto de acuerdo donde se autorice al alcalde municipal para leg","m5":"Realizar un operativo trimestral las instituciones educativas","a4":100.0,"a5":0.0,"pl4":10.0,"ej4":10.0,"pl5":1.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":5.0,"t3e4":5.0,"t4p4":5.0,"t4e4":5.0,"t1p5":1.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":1,"s":"Secretaría de Gobierno","p":"1. La seguridad es compromiso de todos","pr":"Servicio de apoyo para el acceso a la justicia policiva","m4":"Modificar el EOT actual,","m5":"Realizar mínimo un consejo de seguridad mensual","a4":95.5,"a5":100.0,"pl4":22.0,"ej4":21.0,"pl5":6.0,"ej5":6.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":10.0,"t3e4":10.0,"t4p4":12.0,"t4e4":11.0,"t1p5":6.0,"t1e5":6.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":1,"s":"Secretaría de Gobierno","p":"1. La seguridad es compromiso de todos","pr":"Servicio de apoyo para el acceso a la justicia policiva","m4":"Crear y ejecutar un programa de intervención y mejoramiento del espacio público ","m5":"Aumentar el 25% el número de campañas","a4":87.5,"a5":100.0,"pl4":40.0,"ej4":35.0,"pl5":2.0,"ej5":2.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":15.0,"t3e4":15.0,"t4p4":25.0,"t4e4":20.0,"t1p5":2.0,"t1e5":2.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":1,"s":"Secretaría de Gobierno","p":"1. La seguridad es compromiso de todos","pr":"Servicio de asistencia técnica","m4":"Establecer los mecanismos y acciones que permitan el desarrollo de la zona indus","m5":"Crear una red de apoyo, incluyendo comunicaciones e infraestructura, para temas ","a4":100.0,"a5":100.0,"pl4":10.0,"ej4":10.0,"pl5":1.0,"ej5":1.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":3.0,"t3e4":3.0,"t4p4":7.0,"t4e4":7.0,"t1p5":1.0,"t1e5":1.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":1,"s":"Secretaría de Gobierno","p":"1. La seguridad es compromiso de todos","pr":"Servicios de implementaciónde medidas de satisfacción y","m4":"Ejecutar los planes parciales del municipio","m5":"Garantizar la asistencia básica a las víctimas del conflicto armado en el marco ","a4":100.0,"a5":100.0,"pl4":26.0,"ej4":26.0,"pl5":11.0,"ej5":11.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":11.0,"t3e4":11.0,"t4p4":15.0,"t4e4":15.0,"t1p5":11.0,"t1e5":11.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Planeación y Servicios Públicos","p":"Mi Compromiso es Gachancipá Con Mejor Vivienda","pr":"Servicio de apoyo financiero para mejoramiento de vivie","m4":"Diseñar, ejecutar y construir una un proyecto de 500 soluciones de vivienda en e","m5":"Diseñar, ejecutar y construir una un proyecto de 500 soluciones de vivienda en e","a4":0.0,"a5":100.0,"pl4":0.0,"ej4":0.0,"pl5":1.0,"ej5":1.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.0,"t3e4":0.0,"t4p4":0.0,"t4e4":0.0,"t1p5":0.5,"t1e5":0.5,"t2p5":0.5,"t2e5":0.5,"t3p5":0.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Planeación y Servicios Públicos","p":"Mi Compromiso es Gachancipá Con Mejor Vivienda","pr":"Vivienda de Interés Social mejoradas","m4":"Diseñar, ejecutar y poner en marcha un programa dirigido al mejoramiento de vivi","m5":"Diseñar, ejecutar y poner en marcha un programa dirigido al mejoramiento de vivi","a4":90.0,"a5":100.0,"pl4":1.0,"ej4":0.9,"pl5":1.0,"ej5":1.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.6,"t3e4":0.6,"t4p4":0.4,"t4e4":0.3,"t1p5":0.5,"t1e5":0.5,"t2p5":0.5,"t2e5":0.5,"t3p5":0.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Planeación y Servicios Públicos","p":"Mi Compromiso es Gachancipá Con Mejor Vivienda","pr":"Documentos de lineamientos técnicos para el ordenamient","m4":"Ejecutar los planes parciales del municipio","m5":"Ejecutar los planes parciales del municipio","a4":83.3,"a5":100.0,"pl4":0.3,"ej4":0.25,"pl5":0.5,"ej5":0.5,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.1,"t3e4":0.1,"t4p4":0.2,"t4e4":0.15,"t1p5":0.2,"t1e5":0.2,"t2p5":0.3,"t2e5":0.3,"t3p5":0.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Planeación y Servicios Públicos","p":"Mi Compromiso es Gachancipá Con Mejor Vivienda","pr":"Documentos de lineamientos técnicos para el ordenamient","m4":"Crear, diseñar y ejecutar programas de embellecimiento en el municipio","m5":"Crear, diseñar y ejecutar programas de embellecimiento en el municipio","a4":87.5,"a5":0.0,"pl4":0.4,"ej4":0.35,"pl5":1.0,"ej5":0.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.1,"t3e4":0.1,"t4p4":0.3,"t4e4":0.25,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":1.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Planeación y Servicios Públicos","p":"Mi Compromiso es Gachancipá Con Mejor Vivienda","pr":"Documentos de lineamientos técnicos para el ordenamient","m4":"Diseñar, ejecutar y adoptar planos tipo para construcción en el sector rural","m5":"Diseñar, ejecutar y adoptar planos tipo para construcción en el sector rural","a4":90.0,"a5":0.0,"pl4":0.5,"ej4":0.45,"pl5":0.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.15,"t3e4":0.15,"t4p4":0.35,"t4e4":0.3,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Planeación y Servicios Públicos","p":"Mi Compromiso es Gachancipá Con Mejor Vivienda","pr":"Documentos de lineamientos técnicos para el ordenamient","m4":"200 unidades legalizadas","m5":"200 unidades legalizadas","a4":90.0,"a5":0.0,"pl4":0.2,"ej4":0.18,"pl5":0.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.1,"t3e4":0.1,"t4p4":0.1,"t4e4":0.08,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Educación, cultura, recreación y deportes.","p":"MI Compromiso es Gachancipá con Educación","pr":"Servicio de apoyo financiero para la permanencia a la e","m4":"Presentar un proyecto de acuerdo donde se autorice al alcalde municipal para leg","m5":"Actualizar y/o modificar el acuerdo municipal del Fondo de Educación - FES","a4":26.7,"a5":47.8,"pl4":30.0,"ej4":8.0,"pl5":23.0,"ej5":11.0,"g4":"P","g5":"P","t1p4":6.0,"t1e4":0.0,"t2p4":6.0,"t2e4":0.0,"t3p4":8.0,"t3e4":4.0,"t4p4":10.0,"t4e4":4.0,"t1p5":11.0,"t1e5":11.0,"t2p5":0.0,"t2e5":0.0,"t3p5":10.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Educación, cultura, recreación y deportes.","p":"MI Compromiso es Gachancipá con Educación","pr":"Servicio de apoyo financiero para la permanencia a la e","m4":"Modificar el EOT actual,","m5":"Poner en funcionamiento programas del SENA en su sede municipal","a4":0.0,"a5":0.0,"pl4":10.0,"ej4":0.0,"pl5":0.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":5.0,"t1e4":0.0,"t2p4":5.0,"t2e4":0.0,"t3p4":0.0,"t3e4":0.0,"t4p4":0.0,"t4e4":0.0,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Educación, cultura, recreación y deportes.","p":"MI Compromiso es Gachancipá con Educación","pr":"Servicio de apoyo financiero para la permanencia a la e","m4":"Crear y ejecutar un programa de intervención y mejoramiento del espacio público ","m5":"Diseñar, ejecutar y poner en funcionamiento la sede del talleres tecnológicos - ","a4":100.0,"a5":0.0,"pl4":12.0,"ej4":12.0,"pl5":30.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":10.0,"t3e4":10.0,"t4p4":2.0,"t4e4":2.0,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":15.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Educación, cultura, recreación y deportes.","p":"MI Compromiso es Gachancipá con Educación","pr":"Servicio de apoyo financiero para la permanencia a la e","m4":"Establecer los mecanismos y acciones que permitan el desarrollo de la zona indus","m5":"Implementar el funcionamiento de una sede universitaria en el municipio","a4":0.0,"a5":0.0,"pl4":0.0,"ej4":0.0,"pl5":0.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.0,"t3e4":0.0,"t4p4":0.0,"t4e4":0.0,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Educación, cultura, recreación y deportes.","p":"MI Compromiso es Gachancipá con Educación","pr":"Infraestructura educativa dotada","m4":"Ejecutar los planes parciales del municipio","m5":"Realizar mejoramiento a las sedes físicas de las instituciones educativas del mu","a4":37.5,"a5":12.0,"pl4":16.0,"ej4":6.0,"pl5":25.0,"ej5":3.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":8.0,"t2e4":0.0,"t3p4":4.0,"t3e4":4.0,"t4p4":4.0,"t4e4":2.0,"t1p5":0.0,"t1e5":0.0,"t2p5":3.0,"t2e5":3.0,"t3p5":10.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Educación, cultura, recreación y deportes.","p":"MI Compromiso es Gachancipá con Educación","pr":"Servicio de acceso zonas digitales","m4":"Desarrollar el banco de tierras municipal","m5":"Crear e implementar una estrategia dirigida al uso de nuevas tecnologías de la i","a4":16.7,"a5":48.0,"pl4":12.0,"ej4":2.0,"pl5":25.0,"ej5":12.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":9.0,"t2e4":0.0,"t3p4":2.0,"t3e4":1.0,"t4p4":1.0,"t4e4":1.0,"t1p5":6.0,"t1e5":6.0,"t2p5":6.0,"t2e5":6.0,"t3p5":7.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Educación, cultura, recreación y deportes.","p":"MI Compromiso es Gachancipá con Educación","pr":"Infraestructura educativa dotada","m4":"Crear la empresa de servicios públicos del municipio","m5":"Realizar la actualización de las herramientas educativas con el fin de estar a l","a4":0.0,"a5":100.0,"pl4":2.0,"ej4":0.0,"pl5":25.0,"ej5":25.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":1.0,"t3e4":0.0,"t4p4":1.0,"t4e4":0.0,"t1p5":0.0,"t1e5":0.0,"t2p5":25.0,"t2e5":25.0,"t3p5":0.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Educación, cultura, recreación y deportes.","p":"MI Compromiso es Gachancipá con Educación","pr":"Servicio de asistencia técnica","m4":"Celebrar un Convenio para la construcción del PMAAA en el municipio","m5":"Crear un programa que permita el uso de la Ciencia la Tecnología y la Innovación","a4":0.0,"a5":0.0,"pl4":1.0,"ej4":0.0,"pl5":0.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.0,"t3e4":0.0,"t4p4":1.0,"t4e4":0.0,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Educación, cultura, recreación y deportes.","p":"MI Compromiso es Gachancipá con Educación","pr":"Estudios y diseños de infraestructura educativa","m4":"Garantizar el apoyo técnico, jurídico y administrativo a los acueductos veredale","m5":"Gestionar la construcción de un nuevo colegio en el municipio de Gachancipá","a4":0.0,"a5":0.0,"pl4":0.0,"ej4":0.0,"pl5":0.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.0,"t3e4":0.0,"t4p4":0.0,"t4e4":0.0,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Educación, cultura, recreación y deportes.","p":"MI Compromiso es Gachancipá con Educación","pr":"Infraestructura educativa dotada","m4":"Iniciar la ejecución del Plan Maestro de Alcantarillado en el área urbana","m5":"Beneficiar al 100% de los niños del municipio, para que sean estudiantes del gra","a4":21.4,"a5":52.0,"pl4":14.0,"ej4":3.0,"pl5":25.0,"ej5":13.0,"g4":"P","g5":"P","t1p4":5.0,"t1e4":0.0,"t2p4":5.0,"t2e4":0.0,"t3p4":3.0,"t3e4":3.0,"t4p4":1.0,"t4e4":0.0,"t1p5":6.0,"t1e5":6.0,"t2p5":7.0,"t2e5":7.0,"t3p5":6.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Educación, cultura, recreación y deportes.","p":"MI Compromiso es Gachancipá con Educación","pr":"Servicio de apoyo a la permanencia con alimentación esc","m4":"","m5":"Garantizar la cobertura del 100% del programa PAE en el municipio","a4":28.6,"a5":50.0,"pl4":21.0,"ej4":6.0,"pl5":20.0,"ej5":10.0,"g4":"P","g5":"P","t1p4":7.0,"t1e4":0.0,"t2p4":6.0,"t2e4":0.0,"t3p4":4.0,"t3e4":3.0,"t4p4":4.0,"t4e4":3.0,"t1p5":5.0,"t1e5":5.0,"t2p5":5.0,"t2e5":5.0,"t3p5":5.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Educación, cultura, recreación y deportes.","p":"MI Compromiso es Gachancipá con Educación","pr":"Servicio de apoyo a la permanencia con transporte escol","m4":"","m5":"Garantizar la prestación del servicio de transporte escolar a la población neces","a4":98.7,"a5":52.0,"pl4":977.0,"ej4":964.0,"pl5":25.0,"ej5":13.0,"g4":"P","g5":"P","t1p4":7.0,"t1e4":0.0,"t2p4":6.0,"t2e4":0.0,"t3p4":482.0,"t3e4":482.0,"t4p4":482.0,"t4e4":482.0,"t1p5":7.0,"t1e5":7.0,"t2p5":6.0,"t2e5":6.0,"t3p5":6.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Educación, cultura, recreación y deportes.","p":"MI Compromiso es Gachancipá con Educación","pr":"Servicio educativo","m4":"","m5":"Formular e implementar el 100% de un programa de entrega de kits escolares a los","a4":0.0,"a5":100.0,"pl4":1.0,"ej4":0.0,"pl5":25.0,"ej5":25.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.0,"t3e4":0.0,"t4p4":1.0,"t4e4":0.0,"t1p5":20.0,"t1e5":20.0,"t2p5":5.0,"t2e5":5.0,"t3p5":0.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Educación, cultura, recreación y deportes.","p":"MI Compromiso es Gachancipá con Educación","pr":"Servicio de fomento para la permanencia en programas de","m4":"","m5":"Realizar mínimo un convenio con cualquier institución universitaria con el fin d","a4":75.0,"a5":100.0,"pl4":8.0,"ej4":6.0,"pl5":25.0,"ej5":25.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":6.0,"t3e4":6.0,"t4p4":2.0,"t4e4":0.0,"t1p5":15.0,"t1e5":15.0,"t2p5":10.0,"t2e5":10.0,"t3p5":0.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Educación, cultura, recreación y deportes.","p":"MI Compromiso es Gachancipá con Educación","pr":"Servicio educativo","m4":"","m5":"Beneficiar a 5 estudiante de grado once de la institución educativa publica del ","a4":0.0,"a5":0.0,"pl4":0.0,"ej4":0.0,"pl5":25.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.0,"t3e4":0.0,"t4p4":0.0,"t4e4":0.0,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":5.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Educación, cultura, recreación y deportes.","p":"MI Compromiso es Gachancipá con Educación","pr":"Servicio de educación informal","m4":"","m5":"Establecer un programa dirigido a prestar apoyo académico para la presentación d","a4":13.3,"a5":88.0,"pl4":15.0,"ej4":2.0,"pl5":25.0,"ej5":22.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":13.0,"t2e4":0.0,"t3p4":1.0,"t3e4":1.0,"t4p4":1.0,"t4e4":1.0,"t1p5":7.0,"t1e5":7.0,"t2p5":15.0,"t2e5":15.0,"t3p5":2.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Educación, cultura, recreación y deportes.","p":"MI Compromiso es Gachancipá con Educación","pr":"Servicio educativos de promoción del bilingüismo","m4":"","m5":"Fortalecer el aprendizaje de una segunda lengua en las instituciones educativas ","a4":100.0,"a5":48.0,"pl4":478.0,"ej4":478.0,"pl5":25.0,"ej5":12.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":239.0,"t3e4":239.0,"t4p4":239.0,"t4e4":239.0,"t1p5":6.0,"t1e5":6.0,"t2p5":6.0,"t2e5":6.0,"t3p5":6.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Educación, cultura, recreación y deportes.","p":"MI Compromiso es Gachancipá con Educación","pr":"Servicio de apoyo para el fortalecimiento de escuelas d","m4":"","m5":"Crear, ejecutar y poner en funcionamiento la escuela de padres en el municipio","a4":0.0,"a5":0.0,"pl4":0.0,"ej4":0.0,"pl5":20.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.0,"t3e4":0.0,"t4p4":0.0,"t4e4":0.0,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":5.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Educación, cultura, recreación y deportes.","p":"MI Compromiso es Gachancipá con Educación","pr":"Servicio de evaluación de las estrategias educativas im","m4":"","m5":"Crear una celebración del día del maestro","a4":100.0,"a5":100.0,"pl4":2.0,"ej4":2.0,"pl5":25.0,"ej5":25.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":1.0,"t3e4":1.0,"t4p4":1.0,"t4e4":1.0,"t1p5":0.0,"t1e5":0.0,"t2p5":25.0,"t2e5":25.0,"t3p5":0.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Desarrollo Social","p":"Mi Compromiso es Gachancipá con Salud","pr":"Documentos de lineamientos técnicos","m4":"","m5":"Gestionar la construcción del 100% las obras del centro de salud del municipio","a4":0.0,"a5":0.0,"pl4":1.0,"ej4":0.0,"pl5":0.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.25,"t3e4":0.0,"t4p4":0.75,"t4e4":0.0,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Desarrollo Social","p":"Mi Compromiso es Gachancipá con Salud","pr":"Documentos de lineamientos técnicos","m4":"","m5":"reestructuración de la red hospitalaria a la que pertenece el municipio con el f","a4":0.0,"a5":0.0,"pl4":0.0,"ej4":0.0,"pl5":0.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.0,"t3e4":0.0,"t4p4":0.0,"t4e4":0.0,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Desarrollo Social","p":"Mi Compromiso es Gachancipá con Salud","pr":"Documentos de lineamientos técnicos","m4":"","m5":"Realizar una estrategia para disponer de una ambulancia en el municipio","a4":0.0,"a5":0.0,"pl4":0.0,"ej4":0.0,"pl5":0.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.0,"t3e4":0.0,"t4p4":0.0,"t4e4":0.0,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Desarrollo Social","p":"Mi Compromiso es Gachancipá con Salud","pr":"Serviciode apoyo financiero para dotar el servicios de ","m4":"","m5":"Adquirir o dotar un vehículo de transporte especial, para transportar a las pers","a4":0.0,"a5":0.0,"pl4":0.0,"ej4":0.0,"pl5":0.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.0,"t3e4":0.0,"t4p4":0.0,"t4e4":0.0,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Desarrollo Social","p":"Mi Compromiso es Gachancipá con Salud","pr":"Documentos de lineamientos técnicos","m4":"","m5":"Numero de estrategias creadas Establecer una estrategia para fortalecer la lacta","a4":100.0,"a5":0.0,"pl4":0.1,"ej4":0.1,"pl5":0.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.03,"t3e4":0.03,"t4p4":0.07,"t4e4":0.07,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Desarrollo Social","p":"Mi Compromiso es Gachancipá con Salud","pr":"Servicio de vigilancia y control","m4":"","m5":"Alcanzar coberturas del 95% del programa ampliado de inmunización","a4":100.0,"a5":50.0,"pl4":0.1,"ej4":0.1,"pl5":100.0,"ej5":50.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.03,"t3e4":0.03,"t4p4":0.07,"t4e4":0.07,"t1p5":25.0,"t1e5":25.0,"t2p5":25.0,"t2e5":25.0,"t3p5":25.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Desarrollo Social","p":"Mi Compromiso es Gachancipá con Salud","pr":"Servicio de diseño de metodologías, instrumentos y estr","m4":"","m5":"Crear e implementar el modelo de Ciudadanes Entornos y Ruralidades Saludables y ","a4":100.0,"a5":50.0,"pl4":0.1,"ej4":0.1,"pl5":40.0,"ej5":20.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.03,"t3e4":0.03,"t4p4":0.07,"t4e4":0.07,"t1p5":10.0,"t1e5":10.0,"t2p5":10.0,"t2e5":10.0,"t3p5":10.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Desarrollo Social","p":"Mi Compromiso es Gachancipá con Salud","pr":"Documentos de lineamientos técnicos","m4":"","m5":"Establecer un programa de salud sexual y reproductiva en el municipio","a4":100.0,"a5":50.0,"pl4":0.1,"ej4":0.1,"pl5":40.0,"ej5":20.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.03,"t3e4":0.03,"t4p4":0.07,"t4e4":0.07,"t1p5":10.0,"t1e5":10.0,"t2p5":10.0,"t2e5":10.0,"t3p5":10.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Desarrollo Social","p":"Mi Compromiso es Gachancipá con Salud","pr":"Documentos de lineamientos técnicos","m4":"","m5":"Mantener en 0 la tasa de mortalidad materna en el municipio","a4":100.0,"a5":50.0,"pl4":0.1,"ej4":0.1,"pl5":40.0,"ej5":20.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.03,"t3e4":0.03,"t4p4":0.07,"t4e4":0.07,"t1p5":10.0,"t1e5":10.0,"t2p5":10.0,"t2e5":10.0,"t3p5":10.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Desarrollo Social","p":"Mi Compromiso es Gachancipá con Salud","pr":"Documentos de lineamientos técnicos","m4":"","m5":"Establecer un programa para el mejoramiento de la salud mental en el municipio","a4":100.0,"a5":50.0,"pl4":0.1,"ej4":0.1,"pl5":40.0,"ej5":20.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.03,"t3e4":0.03,"t4p4":0.07,"t4e4":0.07,"t1p5":10.0,"t1e5":10.0,"t2p5":10.0,"t2e5":10.0,"t3p5":10.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Desarrollo Social","p":"Mi Compromiso es Gachancipá con Salud","pr":"Servicio de promoción, prevención, vigilancia y control","m4":"","m5":"Lograr incrementar en 50% el número de animales vacunados en el municipio","a4":100,"a5":0.0,"pl4":500.0,"ej4":501.0,"pl5":0.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.0,"t3e4":500.0,"t4p4":500.0,"t4e4":1.0,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Desarrollo Social","p":"Mi Compromiso es Gachancipá con Salud","pr":"Servicio de adopción y seguimiento de acciones y medida","m4":"","m5":"Mantener en 2645 la cobertura al régimen subsidiado de la población vulnerable","a4":100.0,"a5":50.0,"pl4":2.0,"ej4":2.0,"pl5":400.0,"ej5":200.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":1.0,"t3e4":1.0,"t4p4":1.0,"t4e4":1.0,"t1p5":100.0,"t1e5":100.0,"t2p5":100.0,"t2e5":100.0,"t3p5":100.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Desarrollo Social","p":"Mi Compromiso es Gachancipá con Salud","pr":"Servicio deasistencia técnica","m4":"","m5":"Designar un funcionario para que maneje la participación comunitaria en la admin","a4":100.0,"a5":0.0,"pl4":1.0,"ej4":1.0,"pl5":0.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.5,"t3e4":0.5,"t4p4":0.5,"t4e4":0.5,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Desarrollo Social","p":"Mi Compromiso es Gachancipá con Salud","pr":"Servicio de apoyo financiero para dotar con bienes y Se","m4":"","m5":"Crear, implementar y ejecutar un convenio con una droguería en el municipio para","a4":0.0,"a5":0.0,"pl4":0.0,"ej4":0.0,"pl5":0.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.0,"t3e4":0.0,"t4p4":0.0,"t4e4":0.0,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Desarrollo Social","p":"Mi Compromiso es Gachancipá con Salud","pr":"Servicio de vigilancia y control","m4":"","m5":"Implementar un programa de seguimiento a los vendedores ambulantes en estado de ","a4":100.0,"a5":50.0,"pl4":0.1,"ej4":0.1,"pl5":40.0,"ej5":20.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.03,"t3e4":0.03,"t4p4":0.07,"t4e4":0.07,"t1p5":10.0,"t1e5":10.0,"t2p5":10.0,"t2e5":10.0,"t3p5":10.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Desarrollo Social","p":"Mi  Compromiso Es Gachancipá con El Adulto Mayor","pr":"Servicio de atención y protección integral al adulto ma","m4":"","m5":"Crear y poner en funcionamiento el comedor para el adulto mayor en estado de aba","a4":48.0,"a5":54.5,"pl4":0.25,"ej4":0.12,"pl5":55.0,"ej5":30.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.05,"t3e4":0.05,"t4p4":0.2,"t4e4":0.07,"t1p5":15.0,"t1e5":15.0,"t2p5":15.0,"t2e5":15.0,"t3p5":10.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Desarrollo Social","p":"Mi  Compromiso Es Gachancipá con El Adulto Mayor","pr":"Servicio de atención y protección integral al adulto ma","m4":"","m5":"Ejecutar al 100% el seguimiento al plan territorial de salud y otras políticas s","a4":100.0,"a5":50.0,"pl4":0.1,"ej4":0.1,"pl5":40.0,"ej5":20.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.03,"t3e4":0.03,"t4p4":0.07,"t4e4":0.07,"t1p5":10.0,"t1e5":10.0,"t2p5":10.0,"t2e5":10.0,"t3p5":10.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Desarrollo Social","p":"Mi  Compromiso Es Gachancipá con El Adulto Mayor","pr":"Servicio de atención y protección integral al adulto ma","m4":"","m5":"Crear, implementar y ejecutar un programa dirigido a brindar un atención de cali","a4":100.0,"a5":50.0,"pl4":0.1,"ej4":0.1,"pl5":40.0,"ej5":20.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.03,"t3e4":0.03,"t4p4":0.07,"t4e4":0.07,"t1p5":10.0,"t1e5":10.0,"t2p5":10.0,"t2e5":10.0,"t3p5":10.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Desarrollo Social","p":"Mi  Compromiso Es Gachancipá con El Adulto Mayor","pr":"Servicio de atención y protección integral al adulto ma","m4":"","m5":"Crear y poner en marcha el programa de responsabilidad con el adulto mayor.","a4":100.0,"a5":50.0,"pl4":0.1,"ej4":0.1,"pl5":40.0,"ej5":20.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.03,"t3e4":0.03,"t4p4":0.07,"t4e4":0.07,"t1p5":10.0,"t1e5":10.0,"t2p5":10.0,"t2e5":10.0,"t3p5":10.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Desarrollo Social","p":"Mi  Compromiso Es Gachancipá con El Adulto Mayor","pr":"Servicio de atención y protección integral al adulto ma","m4":"","m5":"Crear e implementar el programa de apoyo, psicológico, y ocupacional para los ad","a4":100.0,"a5":50.0,"pl4":0.1,"ej4":0.1,"pl5":40.0,"ej5":20.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.03,"t3e4":0.03,"t4p4":0.07,"t4e4":0.07,"t1p5":10.0,"t1e5":10.0,"t2p5":10.0,"t2e5":10.0,"t3p5":10.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Desarrollo Social","p":"Mi  Compromiso Es Gachancipá con El Adulto Mayor","pr":"Servicio de atención y protección integral al adulto ma","m4":"","m5":"Crear e implementar un programa dirigido a los adultos","a4":100.0,"a5":33.0,"pl4":0.1,"ej4":0.1,"pl5":100.0,"ej5":33.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.03,"t3e4":0.03,"t4p4":0.07,"t4e4":0.07,"t1p5":0.0,"t1e5":0.0,"t2p5":33.0,"t2e5":33.0,"t3p5":33.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Desarrollo Social","p":"Mi  Compromiso Es Gachancipá con El Adulto Mayor","pr":"Servicio de atención y protección integral al adulto ma","m4":"","m5":"Crear un programa dirigido a los adultos mayores del municipio que permita satis","a4":100.0,"a5":25.0,"pl4":0.1,"ej4":0.1,"pl5":100.0,"ej5":25.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.03,"t3e4":0.03,"t4p4":0.07,"t4e4":0.07,"t1p5":25.0,"t1e5":25.0,"t2p5":25.0,"t2e5":0.0,"t3p5":25.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Desarrollo Social","p":"Mi  Compromiso Es Gachancipá con El Adulto Mayor","pr":"Servicio de atención y protección integral al adulto ma","m4":"","m5":"Crear e implementar y poner en marcha la política pública de envejecimiento y ve","a4":0.0,"a5":0.0,"pl4":0.0,"ej4":0.0,"pl5":0.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.0,"t3e4":0.0,"t4p4":0.0,"t4e4":0.0,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Desarrollo Social","p":"Mi  Compromiso Es Gachancipá con La Equidad de la  Mujer Y G","pr":"Servicio de promoción de la garantía de derechos","m4":"","m5":"Ejecutar el 25% de la política pública de mujer y equidad de género","a4":100.0,"a5":50.0,"pl4":0.1,"ej4":0.1,"pl5":40.0,"ej5":20.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.03,"t3e4":0.03,"t4p4":0.07,"t4e4":0.07,"t1p5":10.0,"t1e5":10.0,"t2p5":10.0,"t2e5":10.0,"t3p5":10.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Desarrollo Social","p":"Mi  Compromiso Es Gachancipá con La Equidad de la  Mujer Y G","pr":"Servicio de promoción de la garantía de derechos","m4":"","m5":"Crear y celebrar el día de la diversidad sexual y de género","a4":0.0,"a5":50.0,"pl4":0.0,"ej4":0.0,"pl5":100.0,"ej5":50.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.0,"t3e4":0.0,"t4p4":0.0,"t4e4":0.0,"t1p5":25.0,"t1e5":25.0,"t2p5":25.0,"t2e5":25.0,"t3p5":25.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Desarrollo Social","p":"Mi  Compromiso Es Gachancipá con La Equidad de la  Mujer Y G","pr":"Servicio de promoción de la garantía de derechos","m4":"","m5":"Generar un programa dirigido a las mujeres y diversidad sexual que permita la ig","a4":100.0,"a5":50.0,"pl4":0.1,"ej4":0.1,"pl5":40.0,"ej5":20.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.03,"t3e4":0.03,"t4p4":0.07,"t4e4":0.07,"t1p5":10.0,"t1e5":10.0,"t2p5":10.0,"t2e5":10.0,"t3p5":10.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Desarrollo Social","p":"Mi  Compromiso Es Gachancipá con La Equidad de la  Mujer Y G","pr":"Servicio de promoción de la garantía de derechos","m4":"","m5":"Modificar y ajustar el consejo consultivo de mujeres.","a4":100.0,"a5":50.0,"pl4":0.1,"ej4":0.1,"pl5":40.0,"ej5":20.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.03,"t3e4":0.03,"t4p4":0.07,"t4e4":0.07,"t1p5":10.0,"t1e5":10.0,"t2p5":10.0,"t2e5":10.0,"t3p5":10.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Desarrollo Social","p":"Mi  Compromiso Es Gachancipá con La Equidad de la  Mujer Y G","pr":"Servicio de promoción de la garantía de derechos","m4":"","m5":"Crear e implementar estrategias de inclusión de la mujer víctima del conflicto a","a4":100.0,"a5":50.0,"pl4":0.1,"ej4":0.1,"pl5":40.0,"ej5":20.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.03,"t3e4":0.03,"t4p4":0.07,"t4e4":0.07,"t1p5":10.0,"t1e5":10.0,"t2p5":10.0,"t2e5":10.0,"t3p5":10.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Desarrollo Social","p":"Mi  Compromiso Es Gachancipá con La Equidad de la  Mujer Y G","pr":"Servicio de promoción de la garantía de derechos","m4":"","m5":"Crear e implementar en el municipio el día de la mujer rural","a4":100.0,"a5":66.7,"pl4":0.3,"ej4":0.3,"pl5":75.0,"ej5":50.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.05,"t3e4":0.05,"t4p4":0.25,"t4e4":0.25,"t1p5":25.0,"t1e5":25.0,"t2p5":25.0,"t2e5":25.0,"t3p5":25.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Desarrollo Social","p":"Mi  Compromiso Es Gachancipá con La Equidad de la  Mujer Y G","pr":"Servicio de promoción de la garantía de derechos","m4":"","m5":"Gestionar, promover y adelantar los estudios y diseños de la casa social de la f","a4":0.0,"a5":0.0,"pl4":0.05,"ej4":0.0,"pl5":0.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.0,"t3e4":0.0,"t4p4":0.05,"t4e4":0.0,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Desarrollo Social","p":"Mi  Compromiso Es Gachancipá con la Primera Infancia la Adol","pr":"Servicio dirigidos a la atención de niños, niñas, adole","m4":"","m5":"Gestionar la ampliación del horario de mínimo 1 CDI en el municipio","a4":0.0,"a5":0.0,"pl4":0.0,"ej4":0.0,"pl5":0.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.0,"t3e4":0.0,"t4p4":0.0,"t4e4":0.0,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Desarrollo Social","p":"Mi  Compromiso Es Gachancipá con la Primera Infancia la Adol","pr":"Servicio dirigidos a la atención de niños, niñas, adole","m4":"","m5":"Crear e implementar estrategias que permitan el aprovechamiento del tiempo libe ","a4":100.0,"a5":50.0,"pl4":0.1,"ej4":0.1,"pl5":40.0,"ej5":20.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.03,"t3e4":0.03,"t4p4":0.07,"t4e4":0.07,"t1p5":10.0,"t1e5":10.0,"t2p5":10.0,"t2e5":10.0,"t3p5":10.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Desarrollo Social","p":"Mi  Compromiso Es Gachancipá con la Primera Infancia la Adol","pr":"Servicio dirigidos a la atención de niños, niñas, adole","m4":"","m5":"Aumentar en un 10% la participación de NNA en programas deportivos y culturales ","a4":0.0,"a5":0.0,"pl4":0.0,"ej4":0.0,"pl5":0.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.0,"t3e4":0.0,"t4p4":0.0,"t4e4":0.0,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Desarrollo Social","p":"Mi  Compromiso Es Gachancipá con la Primera Infancia la Adol","pr":"Servicio dirigidos a la atención de niños, niñas, adole","m4":"","m5":"Garantizar el funcionamiento de la Casa de la Juventud","a4":30.0,"a5":50.0,"pl4":0.1,"ej4":0.03,"pl5":40.0,"ej5":20.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.03,"t3e4":0.03,"t4p4":0.07,"t4e4":0.0,"t1p5":10.0,"t1e5":10.0,"t2p5":10.0,"t2e5":10.0,"t3p5":10.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Desarrollo Social","p":"Mi  Compromiso Es Gachancipá con la Primera Infancia la Adol","pr":"Servicio dirigidos a la atención de niños, niñas, adole","m4":"","m5":"Crear e implementar un programa de atención a adolescentes que se encuentran inm","a4":100.0,"a5":50.0,"pl4":0.12,"ej4":0.12,"pl5":40.0,"ej5":20.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.05,"t3e4":0.05,"t4p4":0.07,"t4e4":0.07,"t1p5":10.0,"t1e5":10.0,"t2p5":10.0,"t2e5":10.0,"t3p5":10.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Desarrollo Social","p":"Mi  Compromiso Es Gachancipá con la Primera Infancia la Adol","pr":"Servicio dirigidos a la atención de niños, niñas, adole","m4":"","m5":"Crear e implementar una estrategia de escolarización para los menores que no asi","a4":0.0,"a5":0.0,"pl4":0.0,"ej4":0.0,"pl5":0.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.0,"t3e4":0.0,"t4p4":0.0,"t4e4":0.0,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Desarrollo Social","p":"Mi  Compromiso Es Gachancipá con la Primera Infancia la Adol","pr":"Servicio dirigidos a la atención de niños, niñas, adole","m4":"","m5":"Crear e implementar una celebración para las niñas de escasos recurso que cumpla","a4":100.0,"a5":50.0,"pl4":30.0,"ej4":30.0,"pl5":100.0,"ej5":50.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.0,"t3e4":0.0,"t4p4":30.0,"t4e4":30.0,"t1p5":25.0,"t1e5":25.0,"t2p5":25.0,"t2e5":25.0,"t3p5":25.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Desarrollo Social","p":"Mi  Compromiso Es Gachancipá con Personas Diversamente Hábil","pr":"Servicio de atención integral a población en condición ","m4":"","m5":"Crear e implementar un estrategia de atención prioritaria a las personas en cond","a4":100.0,"a5":50.0,"pl4":0.1,"ej4":0.1,"pl5":40.0,"ej5":20.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.03,"t3e4":0.03,"t4p4":0.07,"t4e4":0.07,"t1p5":10.0,"t1e5":10.0,"t2p5":10.0,"t2e5":10.0,"t3p5":10.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Desarrollo Social","p":"Mi  Compromiso Es Gachancipá con Personas Diversamente Hábil","pr":"Servicio de atención integral a población en condición ","m4":"","m5":"Crear e implementar una estrategia que permita la vinculación de las personas en","a4":0.0,"a5":0.0,"pl4":0.0,"ej4":0.0,"pl5":0.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.0,"t3e4":0.0,"t4p4":0.0,"t4e4":0.0,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Desarrollo Social","p":"Mi  Compromiso Es Gachancipá con Personas Diversamente Hábil","pr":"Servicio de atención integral a población en condición ","m4":"","m5":"Dotar las instalaciones del centro de vida sensorial con elementos que permitan ","a4":100.0,"a5":50.0,"pl4":0.1,"ej4":0.1,"pl5":40.0,"ej5":20.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.0,"t3e4":0.0,"t4p4":0.1,"t4e4":0.1,"t1p5":10.0,"t1e5":10.0,"t2p5":10.0,"t2e5":10.0,"t3p5":10.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Desarrollo Social","p":"Mi  Compromiso Es Gachancipá con Personas Diversamente Hábil","pr":"Servicio de atención integral a población en condición ","m4":"","m5":"Crear e implementar un programa de capacitación para los cuidadores de las perso","a4":100.0,"a5":50.0,"pl4":0.1,"ej4":0.1,"pl5":40.0,"ej5":20.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.03,"t3e4":0.03,"t4p4":0.07,"t4e4":0.07,"t1p5":10.0,"t1e5":10.0,"t2p5":10.0,"t2e5":10.0,"t3p5":10.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Desarrollo Social","p":"Mi  Compromiso Es Gachancipá con Personas Diversamente Hábil","pr":"Servicio de atención integral a población en condición ","m4":"","m5":"Contratar un equipo profesional para la atención de las personas en condición de","a4":100.0,"a5":50.0,"pl4":0.1,"ej4":0.1,"pl5":40.0,"ej5":20.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.03,"t3e4":0.03,"t4p4":0.07,"t4e4":0.07,"t1p5":10.0,"t1e5":10.0,"t2p5":10.0,"t2e5":10.0,"t3p5":10.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Educación, cultura, recreación y deportes.","p":"Mi  Compromiso Es Gachancipá con Cultura","pr":"Servicio de fomento para el acceso de la oferta cultura","m4":"","m5":"Aumentar en un 10% la participación en las escuelas de formación (Fortalecer en ","a4":100.0,"a5":100,"pl4":2.0,"ej4":2.0,"pl5":18.0,"ej5":25.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":1.0,"t3e4":1.0,"t4p4":1.0,"t4e4":1.0,"t1p5":15.0,"t1e5":15.0,"t2p5":3.0,"t2e5":3.0,"t3p5":0.0,"t3e5":3.0},{"e":2,"s":"Secretaría de Educación, cultura, recreación y deportes.","p":"Mi  Compromiso Es Gachancipá con Cultura","pr":"Servicio de apoyo financiero para el desarrollo de prác","m4":"","m5":"Garantizar el funcionamiento del Centro Cultural","a4":0.0,"a5":0.0,"pl4":0.0,"ej4":0.0,"pl5":0.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.0,"t3e4":0.0,"t4p4":0.0,"t4e4":0.0,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Educación, cultura, recreación y deportes.","p":"Mi  Compromiso Es Gachancipá con Cultura","pr":"Centro musicales dotados","m4":"","m5":"Dotar y mantener los instrumentos artística y cultural de las escuelas de formac","a4":0.0,"a5":56.0,"pl4":2.0,"ej4":0.0,"pl5":25.0,"ej5":14.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":1.0,"t3e4":0.0,"t4p4":1.0,"t4e4":0.0,"t1p5":7.0,"t1e5":7.0,"t2p5":7.0,"t2e5":7.0,"t3p5":5.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Educación, cultura, recreación y deportes.","p":"Mi  Compromiso Es Gachancipá con Cultura","pr":"Servicio de apoyo financiero al sector artístico y cult","m4":"","m5":"Crear y ejecutar una estrategia que permita dar visibilidad a las artes y sabere","a4":12.5,"a5":24.0,"pl4":8.0,"ej4":1.0,"pl5":25.0,"ej5":6.0,"g4":"P","g5":"P","t1p4":3.0,"t1e4":0.0,"t2p4":2.0,"t2e4":0.0,"t3p4":2.0,"t3e4":1.0,"t4p4":1.0,"t4e4":0.0,"t1p5":3.0,"t1e5":3.0,"t2p5":3.0,"t2e5":3.0,"t3p5":15.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Educación, cultura, recreación y deportes.","p":"Mi  Compromiso Es Gachancipá con Cultura","pr":"Servicio de asistencia técnica en educación artística y","m4":"","m5":"Ampliar la red de bibliotecas y escuelas de formación del municipio (Fortalecer ","a4":68.8,"a5":68.0,"pl4":32.0,"ej4":22.0,"pl5":25.0,"ej5":17.0,"g4":"P","g5":"P","t1p4":8.0,"t1e4":0.0,"t2p4":2.0,"t2e4":0.0,"t3p4":11.0,"t3e4":11.0,"t4p4":11.0,"t4e4":11.0,"t1p5":10.0,"t1e5":10.0,"t2p5":7.0,"t2e5":7.0,"t3p5":4.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Educación, cultura, recreación y deportes.","p":"Mi  Compromiso Es Gachancipá con Cultura","pr":"Servicio de asistencia técnica en educación artística y","m4":"","m5":"Crear el plan decenal de cultura","a4":0.0,"a5":0.0,"pl4":0.0,"ej4":0.0,"pl5":100.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.0,"t3e4":0.0,"t4p4":0.0,"t4e4":0.0,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":40.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Educación, cultura, recreación y deportes.","p":"Mi  Compromiso Es Gachancipá con Cultura","pr":"Servicio de asistencia técnica en educación artística y","m4":"","m5":"Crear  el estatuto de cultura","a4":0.0,"a5":0.0,"pl4":0.0,"ej4":0.0,"pl5":100.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.0,"t3e4":0.0,"t4p4":0.0,"t4e4":0.0,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":40.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Educación, cultura, recreación y deportes.","p":"Mi  Compromiso Es Gachancipá con Cultura","pr":"Servicio de apoyo financiero para el desarrollo de prác","m4":"","m5":"Crear implementar el acuerdo municipal para el reconocimiento.","a4":50.0,"a5":0.0,"pl4":2.0,"ej4":1.0,"pl5":25.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":1.0,"t3e4":1.0,"t4p4":1.0,"t4e4":0.0,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":10.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Educación, cultura, recreación y deportes.","p":"Mi  Compromiso Es Gachancipá con Cultura","pr":"Servicio de apoyo financiero para el desarrollo de prác","m4":"","m5":"Fortalecer la semana internacional de la cultura","a4":100.0,"a5":0.0,"pl4":2.0,"ej4":2.0,"pl5":25.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":1.0,"t3e4":1.0,"t4p4":1.0,"t4e4":1.0,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":5.0,"t3e5":0.0},{"e":2,"s":"Secretaría de Educación, cultura, recreación y deportes.","p":"Mi  Compromiso Es Gachancipá con Cultura","pr":"Servicio de apoyo financiero para el desarrollo de prác","m4":"","m5":"Crear y presentar el proyecto de acuerdo para la institucionalización del aguina","a4":100.0,"a5":0.0,"pl4":2.0,"ej4":2.0,"pl5":100.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":1.0,"t3e4":1.0,"t4p4":1.0,"t4e4":1.0,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":40.0,"t3e5":0.0},{"e":3,"s":"Secretaría de Educación, cultura, recreación y deportes.","p":"La Gestión Deportiva es compromiso de Todos","pr":"Servicio de mantenimiento a la infraestructura deportiv","m4":"","m5":"Construir, adecuar y/o modernizar escenarios deportivo en el municipio","a4":0.0,"a5":12.0,"pl4":2.0,"ej4":0.0,"pl5":25.0,"ej5":3.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":1.0,"t3e4":0.0,"t4p4":1.0,"t4e4":0.0,"t1p5":3.0,"t1e5":3.0,"t2p5":0.0,"t2e5":0.0,"t3p5":10.0,"t3e5":0.0},{"e":3,"s":"Secretaría de Educación, cultura, recreación y deportes.","p":"La Gestión Deportiva es compromiso de Todos","pr":"Servicio de mantenimiento a la infraestructura deportiv","m4":"","m5":"Reactivar el 100% de los escenarios deportivos del municipio","a4":3.5,"a5":52.0,"pl4":57.0,"ej4":2.0,"pl5":25.0,"ej5":13.0,"g4":"P","g5":"P","t1p4":50.0,"t1e4":0.0,"t2p4":5.0,"t2e4":0.0,"t3p4":1.0,"t3e4":1.0,"t4p4":1.0,"t4e4":1.0,"t1p5":6.0,"t1e5":6.0,"t2p5":7.0,"t2e5":7.0,"t3p5":6.0,"t3e5":0.0},{"e":3,"s":"Secretaría de Educación, cultura, recreación y deportes.","p":"La Gestión Deportiva es compromiso de Todos","pr":"Servicio de mantenimiento a la infraestructura deportiv","m4":"","m5":"Mantener el 100% de los escenarios deportivos abiertos al público","a4":3.1,"a5":52.0,"pl4":32.0,"ej4":1.0,"pl5":25.0,"ej5":13.0,"g4":"P","g5":"P","t1p4":15.0,"t1e4":0.0,"t2p4":15.0,"t2e4":0.0,"t3p4":1.0,"t3e4":1.0,"t4p4":1.0,"t4e4":0.0,"t1p5":6.0,"t1e5":6.0,"t2p5":7.0,"t2e5":7.0,"t3p5":6.0,"t3e5":0.0},{"e":3,"s":"Secretaría de Educación, cultura, recreación y deportes.","p":"La Gestión Deportiva es compromiso de Todos","pr":"Estudios de pre inversión","m4":"","m5":"Presentar los estudios y diseños ante los mecanismos de viabilización departamen","a4":50.0,"a5":0.0,"pl4":2.0,"ej4":1.0,"pl5":8.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":1.0,"t3e4":1.0,"t4p4":1.0,"t4e4":0.0,"t1p5":3.0,"t1e5":0.0,"t2p5":2.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":3,"s":"Secretaría de Educación, cultura, recreación y deportes.","p":"La Gestión Deportiva es compromiso de Todos","pr":"Servicio de promoción de la actividad física, la recrea","m4":"","m5":"Beneficiar al 100% de los deportistas de las escuelas de formación de un program","a4":100.0,"a5":48.0,"pl4":2.0,"ej4":2.0,"pl5":25.0,"ej5":12.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":1.0,"t3e4":1.0,"t4p4":1.0,"t4e4":1.0,"t1p5":6.0,"t1e5":6.0,"t2p5":6.0,"t2e5":6.0,"t3p5":7.0,"t3e5":0.0},{"e":3,"s":"Secretaría de Educación, cultura, recreación y deportes.","p":"La Gestión Deportiva es compromiso de Todos","pr":"Servicio de promoción de la actividad física, la recrea","m4":"","m5":"Crear escuelas de deportes no convencionales en el municipio","a4":100.0,"a5":48.0,"pl4":4.0,"ej4":4.0,"pl5":25.0,"ej5":12.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":2.0,"t3e4":2.0,"t4p4":2.0,"t4e4":2.0,"t1p5":6.0,"t1e5":6.0,"t2p5":6.0,"t2e5":6.0,"t3p5":7.0,"t3e5":0.0},{"e":3,"s":"Secretaría de Educación, cultura, recreación y deportes.","p":"La Gestión Deportiva es compromiso de Todos","pr":"Servicio de promoción de la actividad física, la recrea","m4":"","m5":"Dotar de los elementos necesarios para la práctica del deporte en las distintas ","a4":0.0,"a5":43.5,"pl4":2.0,"ej4":0.0,"pl5":23.0,"ej5":10.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":1.0,"t3e4":0.0,"t4p4":1.0,"t4e4":0.0,"t1p5":5.0,"t1e5":5.0,"t2p5":5.0,"t2e5":5.0,"t3p5":6.0,"t3e5":0.0},{"e":3,"s":"Secretaría de Educación, cultura, recreación y deportes.","p":"La Gestión Deportiva es compromiso de Todos","pr":"Servicio de promoción de la actividad física, la recrea","m4":"","m5":"Crear un programa dirigido a fortalecer el rendimiento de los atletas y para-atl","a4":42.9,"a5":60.0,"pl4":21.0,"ej4":9.0,"pl5":25.0,"ej5":15.0,"g4":"P","g5":"P","t1p4":10.0,"t1e4":0.0,"t2p4":2.0,"t2e4":0.0,"t3p4":7.0,"t3e4":7.0,"t4p4":2.0,"t4e4":2.0,"t1p5":10.0,"t1e5":10.0,"t2p5":5.0,"t2e5":5.0,"t3p5":5.0,"t3e5":0.0},{"e":3,"s":"Secretaría de Educación, cultura, recreación y deportes.","p":"La Gestión Deportiva es compromiso de Todos","pr":"Servicio de promoción de la actividad física, la recrea","m4":"","m5":"Crear y poner en funcionamiento clubes deportivos en el municipio","a4":100.0,"a5":100.0,"pl4":1.0,"ej4":1.0,"pl5":25.0,"ej5":25.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.0,"t3e4":0.0,"t4p4":1.0,"t4e4":1.0,"t1p5":12.0,"t1e5":12.0,"t2p5":13.0,"t2e5":13.0,"t3p5":0.0,"t3e5":0.0},{"e":3,"s":"Secretaría de Educación, cultura, recreación y deportes.","p":"La Gestión Deportiva es compromiso de Todos","pr":"Servicio de promoción de la actividad física, la recrea","m4":"","m5":"Revisar y actualizar el proyecto de acuerdo del deportistas de alto rendimiento","a4":0.0,"a5":0.0,"pl4":2.0,"ej4":0.0,"pl5":100.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":1.0,"t3e4":0.0,"t4p4":1.0,"t4e4":0.0,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":40.0,"t3e5":0.0},{"e":3,"s":"Secretaría de Educación, cultura, recreación y deportes.","p":"La Gestión Deportiva es compromiso de Todos","pr":"Servicio de promoción de la actividad física, la recrea","m4":"","m5":"Actualizar y/o modificar la política del deporte.","a4":0.0,"a5":0.0,"pl4":0.0,"ej4":0.0,"pl5":100.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.0,"t3e4":0.0,"t4p4":0.0,"t4e4":0.0,"t1p5":0.0,"t1e5":0.0,"t2p5":30.0,"t2e5":0.0,"t3p5":40.0,"t3e5":0.0},{"e":3,"s":"Secretaría de Educación, cultura, recreación y deportes.","p":"La Gestión Deportiva es compromiso de Todos","pr":"Servicio de promoción de la actividad física, la recrea","m4":"","m5":"Crear un fundación deportiva que permita el desarrollo de los deportistas de alt","a4":0.0,"a5":0.0,"pl4":0.0,"ej4":0.0,"pl5":0.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.0,"t3e4":0.0,"t4p4":0.0,"t4e4":0.0,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":3,"s":"Secretaría de Educación, cultura, recreación y deportes.","p":"La Gestión Deportiva es compromiso de Todos","pr":"Servicio de promoción de la actividad física, la recrea","m4":"","m5":"Modificar y ajustar los juegos comunales","a4":100.0,"a5":0.0,"pl4":2.0,"ej4":2.0,"pl5":25.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":1.0,"t3e4":1.0,"t4p4":1.0,"t4e4":1.0,"t1p5":0.0,"t1e5":0.0,"t2p5":10.0,"t2e5":0.0,"t3p5":15.0,"t3e5":0.0},{"e":3,"s":"Secretaría de Educación, cultura, recreación y deportes.","p":"La Gestión Deportiva es compromiso de Todos","pr":"Servicio de promoción de la actividad física, la recrea","m4":"","m5":"Crear un programa de recreación en el municipio como esparcimiento e integración","a4":100.0,"a5":0.0,"pl4":2.0,"ej4":2.0,"pl5":25.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":1.0,"t3e4":1.0,"t4p4":1.0,"t4e4":1.0,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":15.0,"t3e5":0.0},{"e":4,"s":"Secretaría de Desarrollo Económico, Agropecuario y Ambiente","p":"El Medio Ambiente es Compromiso de Todos","pr":"Servicio de protección del recurso hídrico","m4":"","m5":"Adquirir mínimo 1 predios de interés hídrico","a4":100.0,"a5":66.7,"pl4":3.0,"ej4":3.0,"pl5":30.0,"ej5":20.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":1.0,"t3e4":1.0,"t4p4":2.0,"t4e4":2.0,"t1p5":10.0,"t1e5":10.0,"t2p5":10.0,"t2e5":10.0,"t3p5":5.0,"t3e5":0.0},{"e":4,"s":"Secretaría de Desarrollo Económico, Agropecuario y Ambiente","p":"El Medio Ambiente es Compromiso de Todos","pr":"Servicio de protección del recurso hídrico","m4":"","m5":"Número de acciones y/o estrategias para la protección de flora fauna y recursos ","a4":100.0,"a5":48.0,"pl4":0.1,"ej4":0.1,"pl5":25.0,"ej5":12.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.03,"t3e4":0.03,"t4p4":0.07,"t4e4":0.07,"t1p5":6.0,"t1e5":6.0,"t2p5":6.0,"t2e5":6.0,"t3p5":6.0,"t3e5":0.0},{"e":4,"s":"Secretaría de Desarrollo Económico, Agropecuario y Ambiente","p":"El Medio Ambiente es Compromiso de Todos","pr":"Servicio de seguimiento","m4":"","m5":"Aumentar el cumplimiento de las ordenes de la sentencia del Rio Bogotá","a4":100.0,"a5":48.0,"pl4":0.2,"ej4":0.2,"pl5":25.0,"ej5":12.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.05,"t3e4":0.05,"t4p4":0.15,"t4e4":0.15,"t1p5":6.0,"t1e5":6.0,"t2p5":6.0,"t2e5":6.0,"t3p5":6.0,"t3e5":0.0},{"e":4,"s":"Secretaría de Desarrollo Económico, Agropecuario y Ambiente","p":"El Medio Ambiente es Compromiso de Todos","pr":"Servicio de protección del recurso hídrico","m4":"","m5":"Crear un programas dirigido para el cumplimiento de los Planes de Ordenación y M","a4":95.0,"a5":48.0,"pl4":0.2,"ej4":0.19,"pl5":25.0,"ej5":12.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.05,"t3e4":0.04,"t4p4":0.15,"t4e4":0.15,"t1p5":6.0,"t1e5":6.0,"t2p5":6.0,"t2e5":6.0,"t3p5":6.0,"t3e5":0.0},{"e":4,"s":"Secretaría de Desarrollo Económico, Agropecuario y Ambiente","p":"El Medio Ambiente es Compromiso de Todos","pr":"Servicio de asistencia técnica","m4":"","m5":"Crear un proyecto de energías limpias en el municipio","a4":100.0,"a5":66.7,"pl4":0.1,"ej4":0.1,"pl5":30.0,"ej5":20.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.03,"t3e4":0.03,"t4p4":0.07,"t4e4":0.07,"t1p5":15.0,"t1e5":15.0,"t2p5":5.0,"t2e5":5.0,"t3p5":5.0,"t3e5":0.0},{"e":4,"s":"Secretaría de Desarrollo Económico, Agropecuario y Ambiente","p":"El Medio Ambiente es Compromiso de Todos","pr":"Servicio de asistencia técnica","m4":"","m5":"Presentar un proyecto de acuerdo que establezca la estrategia de siembra de árbo","a4":100.0,"a5":0.0,"pl4":0.25,"ej4":0.25,"pl5":0.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.1,"t3e4":0.1,"t4p4":0.15,"t4e4":0.15,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":4,"s":"Secretaría de Desarrollo Económico, Agropecuario y Ambiente","p":"El Medio Ambiente es Compromiso de Todos","pr":"Servicio de asistencia técnica","m4":"","m5":"Crear y poner en funcionamiento un vivero municipal","a4":100.0,"a5":60.0,"pl4":0.1,"ej4":0.1,"pl5":1.0,"ej5":0.6,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.03,"t3e4":0.03,"t4p4":0.07,"t4e4":0.07,"t1p5":0.3,"t1e5":0.3,"t2p5":0.3,"t2e5":0.3,"t3p5":0.2,"t3e5":0.0},{"e":4,"s":"Secretaría de Desarrollo Económico, Agropecuario y Ambiente","p":"El Medio Ambiente es Compromiso de Todos","pr":"Servicio de asistencia técnica","m4":"","m5":"Crear y poner en funcionamiento un espacio de esparcimiento para dueños y mascot","a4":0.0,"a5":0.0,"pl4":0.0,"ej4":0.0,"pl5":0.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.0,"t3e4":0.0,"t4p4":0.0,"t4e4":0.0,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":4,"s":"Secretaría de Desarrollo Económico, Agropecuario y Ambiente","p":"El Medio Ambiente es Compromiso de Todos","pr":"Servicios de implementación del Plan de Gestión Integra","m4":"","m5":"Actualizar y ejecutar el PGIRS municipal","a4":100.0,"a5":50.0,"pl4":0.1,"ej4":0.1,"pl5":40.0,"ej5":20.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.03,"t3e4":0.03,"t4p4":0.07,"t4e4":0.07,"t1p5":10.0,"t1e5":10.0,"t2p5":10.0,"t2e5":10.0,"t3p5":10.0,"t3e5":0.0},{"e":4,"s":"Secretaría de Desarrollo Económico, Agropecuario y Ambiente","p":"El Medio Ambiente es Compromiso de Todos","pr":"Servicio de asistencia técnica","m4":"","m5":"Crear y poner en funcionamiento una asociación de recicladores.","a4":100.0,"a5":50.0,"pl4":0.1,"ej4":0.1,"pl5":1.0,"ej5":0.5,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.03,"t3e4":0.03,"t4p4":0.07,"t4e4":0.07,"t1p5":0.25,"t1e5":0.25,"t2p5":0.25,"t2e5":0.25,"t3p5":0.25,"t3e5":0.0},{"e":4,"s":"Secretaría de Desarrollo Económico, Agropecuario y Ambiente","p":"El Medio Ambiente es Compromiso de Todos","pr":"Servicio de educación informal","m4":"","m5":"Garantizar la ejecución de 20% de los PROCEAS y CIDIAS","a4":100.0,"a5":50.0,"pl4":0.1,"ej4":0.1,"pl5":100.0,"ej5":50.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.03,"t3e4":0.03,"t4p4":0.07,"t4e4":0.07,"t1p5":25.0,"t1e5":25.0,"t2p5":25.0,"t2e5":25.0,"t3p5":25.0,"t3e5":0.0},{"e":5,"s":"Secretaría de Desarrollo Económico, Agropecuario y Ambiente","p":"MI compromiso es Gachancipá con Comercio","pr":"Servicio de promoción turística","m4":"","m5":"Crear un espacio de comercialización de productos elaborados en el municipio","a4":100.0,"a5":50.0,"pl4":0.25,"ej4":0.25,"pl5":1.0,"ej5":0.5,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.12,"t3e4":0.12,"t4p4":0.12,"t4e4":0.12,"t1p5":0.25,"t1e5":0.25,"t2p5":0.25,"t2e5":0.25,"t3p5":0.25,"t3e5":0.0},{"e":5,"s":"Secretaría de Desarrollo Económico, Agropecuario y Ambiente","p":"MI compromiso es Gachancipá con Comercio","pr":"Servicio de promoción turística","m4":"","m5":"Modificar el decreto por el cual se establecen los horarios en el municipio","a4":100.0,"a5":0.0,"pl4":1.0,"ej4":1.0,"pl5":50.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.5,"t3e4":0.5,"t4p4":0.5,"t4e4":0.5,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":25.0,"t3e5":0.0},{"e":5,"s":"Secretaría de Desarrollo Económico, Agropecuario y Ambiente","p":"MI compromiso es Gachancipá con Comercio","pr":"Servicio de promoción turística","m4":"","m5":"Realizar mínimo dos actividades en el año, donde se establezca el horario extend","a4":100.0,"a5":0.0,"pl4":1.0,"ej4":1.0,"pl5":50.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.5,"t3e4":0.5,"t4p4":0.5,"t4e4":0.5,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":25.0,"t3e5":0.0},{"e":5,"s":"Secretaría de Desarrollo Económico, Agropecuario y Ambiente","p":"MI compromiso es Gachancipá con Comercio","pr":"Servicio de promoción turística","m4":"","m5":"Crear y conmemorar el día del comerciante en el municipio","a4":0.0,"a5":0.0,"pl4":0.0,"ej4":0.0,"pl5":0.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.0,"t3e4":0.0,"t4p4":0.0,"t4e4":0.0,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":5,"s":"Secretaría de Desarrollo Económico, Agropecuario y Ambiente","p":"MI compromiso es Gachancipá con Comercio","pr":"Servicio de asistencia técnica para mejorar la competit","m4":"","m5":"Ejecutar el programa de seguimiento al trabajo informal en el municipio","a4":100.0,"a5":50.0,"pl4":0.1,"ej4":0.1,"pl5":100.0,"ej5":50.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.03,"t3e4":0.03,"t4p4":0.07,"t4e4":0.07,"t1p5":25.0,"t1e5":25.0,"t2p5":25.0,"t2e5":25.0,"t3p5":25.0,"t3e5":0.0},{"e":5,"s":"Secretaría de Desarrollo Económico, Agropecuario y Ambiente","p":"MI compromiso es Gachancipá con Comercio","pr":"Servicio de promoción turística","m4":"","m5":"Realizar los estudios y diseños para la construcción de un megaproyecto turístic","a4":100.0,"a5":0.0,"pl4":0.1,"ej4":0.1,"pl5":0.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.03,"t3e4":0.03,"t4p4":0.07,"t4e4":0.07,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":5,"s":"Secretaría de Desarrollo Económico, Agropecuario y Ambiente","p":"MI compromiso es Gachancipá con Comercio","pr":"Servicio de apoyo para la modernización y fomento de la","m4":"","m5":"Adoptar el plan decenal de turismo","a4":50.0,"a5":50.0,"pl4":0.25,"ej4":0.12,"pl5":100.0,"ej5":50.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.12,"t3e4":12.5,"t4p4":0.12,"t4e4":0.12,"t1p5":25.0,"t1e5":25.0,"t2p5":25.0,"t2e5":25.0,"t3p5":25.0,"t3e5":0.0},{"e":6,"s":"Secretaría de Gobierno","p":"Gachancipá Planificada y Sostenible es Compromiso de Todos","pr":"Documentos de lineamientos técnicos","m4":"","m5":"Realizar el estudio, análisis y puesta en funcionamiento de las zonas azules.","a4":100.0,"a5":0.0,"pl4":5.0,"ej4":5.0,"pl5":1.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":2.0,"t3e4":2.0,"t4p4":3.0,"t4e4":3.0,"t1p5":1.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":6,"s":"Secretaría de Gobierno","p":"Gachancipá Planificada y Sostenible es Compromiso de Todos","pr":"Documentos de lineamientos técnicos","m4":"","m5":"Realizar el estudio, diseño y Ejecución del plan de movilidad del municipio","a4":100.0,"a5":0.0,"pl4":5.0,"ej4":5.0,"pl5":0.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":2.0,"t3e4":2.0,"t4p4":3.0,"t4e4":3.0,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":6,"s":"Secretaría de Gobierno","p":"Gachancipá Planificada y Sostenible es Compromiso de Todos","pr":"Documentos de lineamientos técnicos","m4":"","m5":"Crear un programa dirigido a la recuperación del espacio público en el municipio","a4":100.0,"a5":100.0,"pl4":5.0,"ej4":5.0,"pl5":1.0,"ej5":1.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":2.0,"t3e4":2.0,"t4p4":3.0,"t4e4":3.0,"t1p5":1.0,"t1e5":1.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":6,"s":"Secretaría de Gobierno","p":"Gachancipá Planificada y Sostenible es Compromiso de Todos","pr":"Documentos de lineamientos técnicos","m4":"","m5":"Diseñar, ejecutar y poner en funcionamiento las zonas de parqueo controlado en e","a4":80.0,"a5":0.0,"pl4":5.0,"ej4":4.0,"pl5":0.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":2.0,"t3e4":1.0,"t4p4":3.0,"t4e4":3.0,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":6,"s":"Secretaría de Gobierno","p":"Gachancipá Planificada y Sostenible es Compromiso de Todos","pr":"Documentos de lineamientos técnicos","m4":"","m5":"Diseñar, ejecutar y poner en marchas conjuntamente con el ministerio de transpor","a4":100.0,"a5":100.0,"pl4":5.0,"ej4":5.0,"pl5":1.0,"ej5":1.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":2.0,"t3e4":2.0,"t4p4":3.0,"t4e4":3.0,"t1p5":1.0,"t1e5":1.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":6,"s":"Secretaría de Gobierno","p":"Gachancipá Planificada y Sostenible es Compromiso de Todos","pr":"Documentos de lineamientos técnicos","m4":"","m5":"Diseñar, ejecutar y poner en funcionamiento la secretaria de Tránsito en el muni","a4":100.0,"a5":0.0,"pl4":5.0,"ej4":5.0,"pl5":1.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":2.0,"t3e4":2.0,"t4p4":3.0,"t4e4":3.0,"t1p5":1.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":6,"s":"Secretaría de Gobierno","p":"Gachancipá Planificada y Sostenible es Compromiso de Todos","pr":"Documentos de lineamientos técnicos","m4":"","m5":"Diseñar, ejecutar y poner en marcha un programa de seguridad vial municipal","a4":100.0,"a5":0.0,"pl4":10.0,"ej4":10.0,"pl5":0.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":3.0,"t3e4":3.0,"t4p4":7.0,"t4e4":7.0,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":6,"s":"Secretaría de Gobierno","p":"Gachancipá Planificada y Sostenible es Compromiso de Todos","pr":"Ciclo infraestructura construida en red vial secundaria","m4":"","m5":"Crear una ciclo ruta como proyecto de movilidad para los bici usuarios del munic","a4":100.0,"a5":0.0,"pl4":5.0,"ej4":5.0,"pl5":0.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":2.0,"t3e4":2.0,"t4p4":3.0,"t4e4":3.0,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":6,"s":"Secretaria de Obras Públicas","p":"Gachancipá Planificada y Sostenible es Compromiso de Todos","pr":"Vía secundaria mejorada","m4":"Construir, adecuar y poner en funcionamiento la vía que conduce de Santa Barbara","m5":"Construir, adecuar y poner en funcionamiento la vía que conduce de Santa Barbara","a4":76.9,"a5":80.0,"pl4":0.13,"ej4":0.1,"pl5":50.0,"ej5":40.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.03,"t3e4":0.03,"t4p4":0.1,"t4e4":0.07,"t1p5":25.0,"t1e5":25.0,"t2p5":25.0,"t2e5":15.0,"t3p5":0.0,"t3e5":0.0},{"e":6,"s":"Secretaria de Obras Públicas","p":"Gachancipá Planificada y Sostenible es Compromiso de Todos","pr":"Vía secundaria mejorada","m4":"Gestionar la construcción de la vía Gachina a Roble Centro","m5":"Gestionar la construcción de la vía Gachina a Roble Centro","a4":0.0,"a5":0.0,"pl4":0.0,"ej4":0.0,"pl5":0.0,"ej5":0.0,"g4":"NP","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.0,"t3e4":0.0,"t4p4":0.0,"t4e4":0.0,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":6,"s":"Secretaria de Obras Públicas","p":"Gachancipá Planificada y Sostenible es Compromiso de Todos","pr":"Vía secundaria mejorada","m4":"Construir 500 metros lineales de placa huellas","m5":"Construir 500 metros lineales de placa huellas","a4":86.7,"a5":42.0,"pl4":0.15,"ej4":0.13,"pl5":50.0,"ej5":21.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.05,"t3e4":0.05,"t4p4":0.1,"t4e4":0.08,"t1p5":25.0,"t1e5":21.0,"t2p5":25.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":6,"s":"Secretaria de Obras Públicas","p":"Gachancipá Planificada y Sostenible es Compromiso de Todos","pr":"Documentos de lineamientos técnicos","m4":"Lograr 500 metros lineales en conformación de vías en pavimento rígido o flexibl","m5":"Lograr 500 metros lineales en conformación de vías en pavimento rígido o flexibl","a4":100.0,"a5":0.4,"pl4":1000.0,"ej4":1000.0,"pl5":50.0,"ej5":0.2,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":200.0,"t3e4":200.0,"t4p4":800.0,"t4e4":800.0,"t1p5":25.0,"t1e5":0.2,"t2p5":25.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":6,"s":"Secretaria de Obras Públicas","p":"Gachancipá Planificada y Sostenible es Compromiso de Todos","pr":"Documentos de lineamientos técnicos","m4":"Realizar el mantenimiento del 100% de la maquinaria","m5":"Realizar el mantenimiento del 100% de la maquinaria","a4":100.0,"a5":60.0,"pl4":10.0,"ej4":10.0,"pl5":50.0,"ej5":30.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":3.0,"t3e4":3.0,"t4p4":7.0,"t4e4":7.0,"t1p5":25.0,"t1e5":18.0,"t2p5":25.0,"t2e5":12.0,"t3p5":0.0,"t3e5":0.0},{"e":6,"s":"Secretaria de Obras Públicas","p":"Gachancipá Planificada y Sostenible es Compromiso de Todos","pr":"Documentos de lineamientos técnicos","m4":"Diseñar, viabilizar y construir infraestructura vial en el municipio","m5":"Diseñar, viabilizar y construir infraestructura vial en el municipio","a4":98.0,"a5":40.0,"pl4":30000.0,"ej4":29403.0,"pl5":50.0,"ej5":20.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":20000.0,"t3e4":20000.0,"t4p4":10000.0,"t4e4":9403.0,"t1p5":25.0,"t1e5":15.0,"t2p5":25.0,"t2e5":5.0,"t3p5":0.0,"t3e5":0.0},{"e":6,"s":"Secretaria de Obras Públicas","p":"Gachancipá Planificada y Sostenible es Compromiso de Todos","pr":"Puente peatonal de la red urbana construido","m4":"Realizar gestiones ante la Agencia Nacional de Infraestructura (Gestionar ante l","m5":"Realizar gestiones ante la Agencia Nacional de Infraestructura (Gestionar ante l","a4":90.0,"a5":40.0,"pl4":1.0,"ej4":0.9,"pl5":50.0,"ej5":20.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.3,"t3e4":0.3,"t4p4":0.7,"t4e4":0.6,"t1p5":25.0,"t1e5":10.0,"t2p5":25.0,"t2e5":10.0,"t3p5":0.0,"t3e5":0.0},{"e":6,"s":"Secretaria de Obras Públicas","p":"Gachancipá Planificada y Sostenible es Compromiso de Todos","pr":"Documentos de lineamientos técnicos","m4":"Realizar gestiones ante el Ministerio de Transporte (Gestionar ante el Ministeri","m5":"Realizar gestiones ante el Ministerio de Transporte (Gestionar ante el Ministeri","a4":90.0,"a5":50.0,"pl4":1.0,"ej4":0.9,"pl5":50.0,"ej5":25.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.3,"t3e4":0.3,"t4p4":0.7,"t4e4":0.6,"t1p5":25.0,"t1e5":10.0,"t2p5":25.0,"t2e5":15.0,"t3p5":0.0,"t3e5":0.0},{"e":6,"s":"Secretaría de Planeación y Servicios Públicos","p":"Gachancipá Planificada y Sostenible es Compromiso de Todos","pr":"Servicios de asistencia técnica en planificación urbana","m4":"","m5":"Presentar un proyecto de acuerdo donde se autorice al alcalde municipal para leg","a4":100.0,"a5":100.0,"pl4":1.0,"ej4":1.0,"pl5":0.5,"ej5":0.5,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.5,"t3e4":0.5,"t4p4":0.5,"t4e4":0.5,"t1p5":0.0,"t1e5":0.0,"t2p5":0.5,"t2e5":0.5,"t3p5":0.0,"t3e5":0.0},{"e":6,"s":"Secretaría de Planeación y Servicios Públicos","p":"Gachancipá Planificada y Sostenible es Compromiso de Todos","pr":"Servicios de asistencia técnica en planificación urbana","m4":"","m5":"Modificar el EOT actual,","a4":94.4,"a5":0.0,"pl4":0.9,"ej4":0.85,"pl5":0.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.5,"t3e4":0.5,"t4p4":0.4,"t4e4":0.35,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":6,"s":"Secretaría de Planeación y Servicios Públicos","p":"Gachancipá Planificada y Sostenible es Compromiso de Todos","pr":"Servicio de asistencia técnica en Espacio publico","m4":"","m5":"Crear y ejecutar un programa de intervención y mejoramiento del espacio público ","a4":90.0,"a5":100.0,"pl4":1.0,"ej4":0.9,"pl5":0.5,"ej5":0.5,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.3,"t3e4":0.3,"t4p4":0.7,"t4e4":0.6,"t1p5":0.0,"t1e5":0.0,"t2p5":0.5,"t2e5":0.5,"t3p5":0.0,"t3e5":0.0},{"e":6,"s":"Secretaría de Planeación y Servicios Públicos","p":"Mi Compromiso es Gachancipá Industrial","pr":"Servicios de asistencia técnica en planificación urbana","m4":"","m5":"Establecer los mecanismos y acciones que permitan el desarrollo de la zona indus","a4":100.0,"a5":80.0,"pl4":3.0,"ej4":3.0,"pl5":20.0,"ej5":16.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":3.0,"t3e4":3.0,"t4p4":3.0,"t4e4":3.0,"t1p5":10.0,"t1e5":9.0,"t2p5":10.0,"t2e5":7.0,"t3p5":0.0,"t3e5":0.0},{"e":6,"s":"Secretaría de Planeación y Servicios Públicos","p":"Mi Compromiso es Gachancipá Industrial","pr":"Servicios de gestión para la elaboración de instrumento","m4":"","m5":"Ejecutar los planes parciales del municipio","a4":83.3,"a5":0.0,"pl4":0.3,"ej4":0.25,"pl5":0.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.1,"t3e4":0.1,"t4p4":0.2,"t4e4":0.15,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":6,"s":"Secretaría de Planeación y Servicios Públicos","p":"Mi Compromiso es Gachancipá Industrial","pr":"Servicios de  Información actualizados","m4":"","m5":"Desarrollar el banco de tierras municipal","a4":90.0,"a5":0.0,"pl4":0.5,"ej4":0.45,"pl5":0.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.25,"t3e4":0.25,"t4p4":0.25,"t4e4":0.2,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":6,"s":"Secretaría de Planeación y Servicios Públicos","p":"Mi  Compromiso Es Gachancipá con Agua Potable y Saneamiento ","pr":"Documentos de planeación","m4":"","m5":"Crear la empresa de servicios públicos del municipio","a4":83.3,"a5":0.0,"pl4":0.3,"ej4":0.25,"pl5":0.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.15,"t3e4":0.15,"t4p4":0.15,"t4e4":0.1,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":6,"s":"Secretaría de Planeación y Servicios Públicos","p":"Mi  Compromiso Es Gachancipá con Agua Potable y Saneamiento ","pr":"Servicios de apoyo financiero para la ejecución de proy","m4":"","m5":"Celebrar un Convenio para la construcción del PMAAA en el municipio","a4":83.3,"a5":100.0,"pl4":0.3,"ej4":0.25,"pl5":0.3,"ej5":0.3,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.15,"t3e4":0.15,"t4p4":0.15,"t4e4":0.1,"t1p5":0.0,"t1e5":0.0,"t2p5":0.3,"t2e5":0.3,"t3p5":0.0,"t3e5":0.0},{"e":6,"s":"Secretaría de Planeación y Servicios Públicos","p":"Mi  Compromiso Es Gachancipá con Agua Potable y Saneamiento ","pr":"Servicio de regulación en Agua Potable y Saneamiento Bá","m4":"","m5":"Garantizar el apoyo técnico, jurídico y administrativo a los acueductos veredale","a4":95.0,"a5":100.0,"pl4":1.0,"ej4":0.95,"pl5":0.4,"ej5":0.4,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":1.0,"t3e4":1.0,"t4p4":1.0,"t4e4":0.9,"t1p5":0.1,"t1e5":0.1,"t2p5":0.3,"t2e5":0.3,"t3p5":0.0,"t3e5":0.0},{"e":6,"s":"Secretaría de Planeación y Servicios Públicos","p":"Mi  Compromiso Es Gachancipá con Agua Potable y Saneamiento ","pr":"Servicios de apoyo financiero para la ejecución de proy","m4":"","m5":"Iniciar la ejecución del Plan Maestro de Alcantarillado en el área urbana","a4":83.3,"a5":0.0,"pl4":0.3,"ej4":0.25,"pl5":0.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.15,"t3e4":0.15,"t4p4":0.15,"t4e4":0.1,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":7,"s":"Secretaría de Desarrollo Económico, Agropecuario y Ambiente","p":"Mi compromiso es Gachancipá Agropecuaria","pr":"Servicio de asistencia técnica agropecuaria dirigida a ","m4":"","m5":"Incentivar al campesino para que sus predios se vuelvan altamente productivos","a4":100.0,"a5":50.0,"pl4":0.2,"ej4":0.2,"pl5":100.0,"ej5":50.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.05,"t3e4":0.05,"t4p4":0.15,"t4e4":0.15,"t1p5":25.0,"t1e5":25.0,"t2p5":25.0,"t2e5":25.0,"t3p5":25.0,"t3e5":0.0},{"e":7,"s":"Secretaría de Desarrollo Económico, Agropecuario y Ambiente","p":"Mi compromiso es Gachancipá Agropecuaria","pr":"Servicio de educación informal","m4":"","m5":"Establecer capacitaciones dirigidas a los campesinos del municipio para el manej","a4":100.0,"a5":50.0,"pl4":0.1,"ej4":0.1,"pl5":100.0,"ej5":50.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.03,"t3e4":0.03,"t4p4":0.07,"t4e4":0.07,"t1p5":25.0,"t1e5":25.0,"t2p5":25.0,"t2e5":25.0,"t3p5":25.0,"t3e5":0.0},{"e":7,"s":"Secretaría de Desarrollo Económico, Agropecuario y Ambiente","p":"Mi compromiso es Gachancipá Agropecuaria","pr":"Servicio de apoyo financiero para proyectos productivos","m4":"","m5":"Gestionar convenios con universidades de trayectoria departamental y/o nacional ","a4":100.0,"a5":48.0,"pl4":0.25,"ej4":0.25,"pl5":25.0,"ej5":12.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.1,"t3e4":0.1,"t4p4":0.15,"t4e4":0.15,"t1p5":6.0,"t1e5":6.0,"t2p5":6.0,"t2e5":6.0,"t3p5":6.0,"t3e5":0.0},{"e":7,"s":"Secretaría de Desarrollo Económico, Agropecuario y Ambiente","p":"Mi compromiso es Gachancipá Agropecuaria","pr":"Servicio de asistencia técnica agropecuaria dirigida a ","m4":"","m5":"Crear 1 asociación de campesinos o comerciantes en el municipio","a4":100.0,"a5":50.0,"pl4":0.25,"ej4":0.25,"pl5":100.0,"ej5":50.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.1,"t3e4":0.1,"t4p4":0.15,"t4e4":0.15,"t1p5":25.0,"t1e5":25.0,"t2p5":25.0,"t2e5":25.0,"t3p5":25.0,"t3e5":0.0},{"e":7,"s":"Secretaría de Desarrollo Económico, Agropecuario y Ambiente","p":"Mi compromiso es Gachancipá Agropecuaria","pr":"Servicio de apoyo en la formulación y estructuración de","m4":"","m5":"Presentar proyectos que garanticen el acceso a los recursos y apoyos del gobiern","a4":100.0,"a5":48.0,"pl4":0.2,"ej4":0.2,"pl5":25.0,"ej5":12.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.05,"t3e4":0.05,"t4p4":0.15,"t4e4":0.15,"t1p5":6.0,"t1e5":6.0,"t2p5":6.0,"t2e5":6.0,"t3p5":6.0,"t3e5":0.0},{"e":7,"s":"Secretaría de Desarrollo Económico, Agropecuario y Ambiente","p":"Mi compromiso es Gachancipá Agropecuaria","pr":"Servicio de asesoría para la sostenibilidad de apuestas","m4":"","m5":"Gestionar ante el Banco Agrario la oficina de atención en el municipio","a4":0.0,"a5":0.0,"pl4":0.0,"ej4":0.0,"pl5":0.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.0,"t3e4":0.0,"t4p4":0.0,"t4e4":0.0,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":7,"s":"Secretaría de Desarrollo Económico, Agropecuario y Ambiente","p":"Mi compromiso es Gachancipá Agropecuaria","pr":"Servicio de apoyo a la comercialización","m4":"","m5":"Implementar espacios que faciliten la comercialización de sus productos en grand","a4":50.0,"a5":0.0,"pl4":0.25,"ej4":0.12,"pl5":25.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.12,"t3e4":12.5,"t4p4":0.12,"t4e4":0.12,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":15.0,"t3e5":0.0},{"e":7,"s":"Secretaría de Desarrollo Económico, Agropecuario y Ambiente","p":"Mi compromiso es Gachancipá Agropecuaria","pr":"Servicio de educación informal","m4":"","m5":"Ejecutar e implementar programas de cultura equina en el municipio","a4":100.0,"a5":0.0,"pl4":0.1,"ej4":0.1,"pl5":25.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.03,"t3e4":0.03,"t4p4":0.07,"t4e4":0.07,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":7,"s":"Secretaría de Desarrollo Económico, Agropecuario y Ambiente","p":"Mi compromiso es Gachancipá Agropecuaria","pr":"Estudios de preinversión","m4":"","m5":"Realizar los estudios y diseños para construcción de una planta de sacrificio an","a4":0.0,"a5":0.0,"pl4":0.0,"ej4":0.0,"pl5":0.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.0,"t3e4":0.0,"t4p4":0.0,"t4e4":0.0,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":7,"s":"Secretaría de Gobierno","p":"Mi compromiso es Gachancipá Agropecuaria","pr":"Servicios de control de parásitos para especies de inte","m4":"","m5":"Garantizar el funcionamiento del albergue temporal y un programa de bienestar an","a4":100.0,"a5":0.0,"pl4":5.0,"ej4":5.0,"pl5":0.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":2.0,"t3e4":2.0,"t4p4":3.0,"t4e4":3.0,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":8,"s":"Secretaría de Gobierno","p":"Mi compromiso es Gachancipá con la Gestión del Riesgo","pr":"Servicio de atención a emergencias y desastres","m4":"","m5":"Garantizar como mínimo la permanencia de un cuerpo de socorro en el municipio","a4":100.0,"a5":100.0,"pl4":35.0,"ej4":35.0,"pl5":1.0,"ej5":1.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":10.0,"t3e4":10.0,"t4p4":25.0,"t4e4":25.0,"t1p5":1.0,"t1e5":1.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":8,"s":"Secretaría de Gobierno","p":"Mi compromiso es Gachancipá con la Gestión del Riesgo","pr":"Obras de infraestructura para la reducción del riesgo d","m4":"","m5":"Garantizar el mantenimiento de  mínimo 500 metros lineales de los vallados en el","a4":100.0,"a5":0.0,"pl4":5.0,"ej4":5.0,"pl5":0.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":2.0,"t3e4":2.0,"t4p4":3.0,"t4e4":3.0,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":8,"s":"Secretaría de Gobierno","p":"Mi compromiso es Gachancipá con la Gestión del Riesgo","pr":"Obras de infraestructura para la reducción del riesgo d","m4":"","m5":"Desarrollar vallados que mitiguen los riesgo de inundación en el municipio","a4":100.0,"a5":0.0,"pl4":5.0,"ej4":5.0,"pl5":0.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":2.0,"t3e4":2.0,"t4p4":3.0,"t4e4":3.0,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":8,"s":"Secretaría de Gobierno","p":"Mi compromiso es Gachancipá con la Gestión del Riesgo","pr":"Servicio de atención a emergencias y desastres","m4":"","m5":"Actualizar los planes y programas de gestión del riesgo de desastres incluyendo ","a4":100.0,"a5":100.0,"pl4":15.0,"ej4":15.0,"pl5":1.0,"ej5":1.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":5.0,"t3e4":5.0,"t4p4":10.0,"t4e4":10.0,"t1p5":1.0,"t1e5":1.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":8,"s":"Secretaría de Gobierno","p":"Mi compromiso es Gachancipá con la Gestión del Riesgo","pr":"Obras de infraestructura para la reducción del riesgo d","m4":"","m5":"Construir muros de contención y jarillones que mitiguen los deslizamientos en el","a4":100.0,"a5":0.0,"pl4":5.0,"ej4":5.0,"pl5":0.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":2.0,"t3e4":2.0,"t4p4":3.0,"t4e4":3.0,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":9,"s":"Secretaría de Hacienda","p":"Mi compromiso es Gachancipá con transparencia","pr":"Servicio de saneamiento fiscal y financiero","m4":"Aumentar un 2% el recaudo de los tributos municipales","m5":"Aumentar un 2% el recaudo de los tributos municipales","a4":100.0,"a5":80.0,"pl4":0.1,"ej4":0.1,"pl5":50.0,"ej5":40.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.05,"t3e4":0.05,"t4p4":0.05,"t4e4":0.05,"t1p5":25.0,"t1e5":20.0,"t2p5":25.0,"t2e5":20.0,"t3p5":0.0,"t3e5":0.0},{"e":9,"s":"Secretaría de Desarrollo Institucional","p":"Mi compromiso es Gachancipá con Gestión institucional","pr":"Servicio de Implementación Sistemas de Gestión","m4":"Mejorar 1% el índice de MIPG","m5":"Mejorar 1% el índice de MIPG","a4":100.0,"a5":100.0,"pl4":15.0,"ej4":15.0,"pl5":56.8,"ej5":56.8,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":5.0,"t3e4":5.0,"t4p4":10.0,"t4e4":10.0,"t1p5":0.0,"t1e5":0.0,"t2p5":56.8,"t2e5":56.8,"t3p5":0.0,"t3e5":0.0},{"e":9,"s":"Secretaría General","p":"Mi compromiso es Gachancipá con Gestión institucional","pr":"Servicio de apoyo financiero para el fortalecimiento de","m4":"","m5":"Aumentar en 2 las actividades de bienestar en la administración municipal","a4":0.0,"a5":100.0,"pl4":0.0,"ej4":6.0,"pl5":3.0,"ej5":3.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":5.0,"t3e4":5.0,"t4p4":1.0,"t4e4":1.0,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":9,"s":"Secretaría General","p":"Mi compromiso es Gachancipá con Gestión institucional","pr":"Servicio de apoyo financiero para el fortalecimiento de","m4":"","m5":"Beneficiar a 4 funcionarios profesional para el acceso y permanencia en estudios","a4":100.0,"a5":0.0,"pl4":2.0,"ej4":2.0,"pl5":1.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":1.0,"t3e4":1.0,"t4p4":1.0,"t4e4":1.0,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":9,"s":"Secretaría General","p":"Mi compromiso es Gachancipá con Gestión institucional","pr":"Servicio de asistencia técnica","m4":"","m5":"Evitar el aumento de procesos judiciales encontrar de la administración","a4":50.0,"a5":100.0,"pl4":10.0,"ej4":5.0,"pl5":5.0,"ej5":5.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":5.0,"t3e4":5.0,"t4p4":5.0,"t4e4":0.0,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":9,"s":"Secretaría General","p":"Mi compromiso es Gachancipá con Gestión institucional","pr":"Servicio de asistencia técnica","m4":"","m5":"Lograr la actualización del manual de contratación e interventoría de la entidad","a4":43.1,"a5":0.0,"pl4":7.03,"ej4":3.03,"pl5":1.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.03,"t3e4":0.03,"t4p4":7.0,"t4e4":3.0,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":9,"s":"Secretaría General","p":"Mi compromiso es Gachancipá con Gestión institucional","pr":"Servicio de asistencia técnica","m4":"","m5":"Ajustar los procesos contractuales a las necesidades reales de la entidad","a4":100.0,"a5":0.0,"pl4":3.02,"ej4":3.02,"pl5":1.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.02,"t3e4":0.02,"t4p4":3.0,"t4e4":3.0,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":9,"s":"Secretaría General","p":"Mi compromiso es Gachancipá con Gestión institucional","pr":"Servicio de gestión documental","m4":"","m5":"Generar la aprobación de las tablas de valoración documental de la administració","a4":0.0,"a5":66.7,"pl4":0.0,"ej4":0.0,"pl5":3.0,"ej5":2.0,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.0,"t3e4":0.0,"t4p4":0.0,"t4e4":0.0,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":9,"s":"Secretaría General","p":"Mi compromiso es Gachancipá con Gestión institucional","pr":"Servicio de Implementación Sistemas de Gestión","m4":"","m5":"Mejorar 1% el índice de MECI","a4":0.0,"a5":0.0,"pl4":0.0,"ej4":0.0,"pl5":0.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.0,"t3e4":0.0,"t4p4":0.0,"t4e4":0.0,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":6,"s":"Secretaría de Planeación y Servicios Públicos","p":"MINAS Y ENERGÍA","pr":"Servicio de asistencia técnica","m4":"","m5":"Lograr aumentar en 40% la  cobertura de gas natural en el municipio","a4":80.0,"a5":100.0,"pl4":0.1,"ej4":0.08,"pl5":0.4,"ej5":0.4,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.03,"t3e4":0.03,"t4p4":0.07,"t4e4":0.05,"t1p5":0.1,"t1e5":0.1,"t2p5":0.3,"t2e5":0.3,"t3p5":0.0,"t3e5":0.0},{"e":6,"s":"Secretaría de Planeación y Servicios Públicos","p":"MINAS Y ENERGÍA","pr":"Servicio de apoyo financiero para subsidios al consumo ","m4":"","m5":"Presentar un proyecto de acuerdo para establecer los subsidios de conexión al se","a4":0.0,"a5":0.0,"pl4":0.0,"ej4":0.0,"pl5":0.0,"ej5":0.0,"g4":"P","g5":"NP","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.0,"t3e4":0.0,"t4p4":0.0,"t4e4":0.0,"t1p5":0.0,"t1e5":0.0,"t2p5":0.0,"t2e5":0.0,"t3p5":0.0,"t3e5":0.0},{"e":6,"s":"Secretaría de Planeación y Servicios Públicos","p":"MINAS Y ENERGÍA","pr":"Estudios de pre inversión e inversión","m4":"","m5":"Aumentar en 500 metros lineales de alumbrado público municipal","a4":80.0,"a5":100.0,"pl4":0.1,"ej4":0.08,"pl5":0.4,"ej5":0.4,"g4":"P","g5":"P","t1p4":0.0,"t1e4":0.0,"t2p4":0.0,"t2e4":0.0,"t3p4":0.03,"t3e4":0.03,"t4p4":0.07,"t4e4":0.05,"t1p5":0.1,"t1e5":0.1,"t2p5":0.3,"t2e5":0.3,"t3p5":0.0,"t3e5":0.0}];
+
+// Expand compact data
+const PLAN_DATA = PLAN_DATA_COMPACT.map(r => ({
+  eje: r.e, secretaria: r.s, programa: r.p, producto: r.pr,
+  meta_2024: r.m4, meta_2025: r.m5,
+  avance_2024: r.a4, avance_2025: r.a5,
+  total_planeado_2024: r.pl4, total_ejecutado_2024: r.ej4,
+  total_planeado_2025: r.pl5, total_ejecutado_2025: r.ej5,
+  programado_2024: r.g4, programado_2025: r.g5,
+  t1_plan_2024: r.t1p4, t1_ejec_2024: r.t1e4,
+  t2_plan_2024: r.t2p4, t2_ejec_2024: r.t2e4,
+  t3_plan_2024: r.t3p4, t3_ejec_2024: r.t3e4,
+  t4_plan_2024: r.t4p4, t4_ejec_2024: r.t4e4,
+  t1_plan_2025: r.t1p5, t1_ejec_2025: r.t1e5,
+  t2_plan_2025: r.t2p5, t2_ejec_2025: r.t2e5,
+  t3_plan_2025: r.t3p5, t3_ejec_2025: r.t3e5,
+  avance_2026: 0, avance_2027: 0, logros: '',
+}));
+</script>
+<script>
+/**
+ * PLAN DE DESARROLLO GACHANCIPÁ 2024-2027
+ * Dashboard Ejecutivo — app.js
+ * Arquitectura: filtrado reactivo + Plotly.js + DataTables
+ */
+
+'use strict';
+
+// ══════════════════════════════════════════════════════════════
+// CONSTANTES Y CONFIGURACIÓN
+// ══════════════════════════════════════════════════════════════
+const COLORS = {
+  blueDark : '#0B3C5D',
+  blueMid  : '#1A6FB5',
+  blueLight: '#E8F1FA',
+  green    : '#2E8B57',
+  gold     : '#D4AF37',
+  red      : '#C0392B',
+  orange   : '#E67E22',
+  purple   : '#7D3C98',
+  teal     : '#1B8A6B',
+  grayMuted: '#8A93A6',
+};
+
+const SEC_ABBR = {
+  'Secretaría de Gobierno':                                   'Gobierno',
+  'Secretaría de Planeación y Servicios Públicos':            'Planeación',
+  'Secretaría de Educación, cultura, recreación y deportes.': 'Educación',
+  'Secretaría de Desarrollo Social':                          'Des. Social',
+  'Secretaría de Desarrollo Económico, Agropecuario y Ambiente': 'Des. Económico',
+  'Secretaria de Obras Públicas':                             'Obras Púb.',
+  'Secretaría de Hacienda':                                   'Hacienda',
+  'Secretaría de Desarrollo Institucional':                   'Des. Inst.',
+  'Secretaría General':                                       'Sec. General',
+};
+
+const SEC_COLORS = [
+  '#0B3C5D','#1A6FB5','#2E8B57','#D4AF37','#C0392B',
+  '#7D3C98','#1B8A6B','#E67E22','#2980B9',
+];
+
+// ══════════════════════════════════════════════════════════════
+// ESTADO GLOBAL
+// ══════════════════════════════════════════════════════════════
+let dataTable = null;
+let filteredData = [];
+let activeAnio = '2024';
+
+// ══════════════════════════════════════════════════════════════
+// UTILIDADES
+// ══════════════════════════════════════════════════════════════
+const $ = id => document.getElementById(id);
+const fmt1 = n => n.toFixed(1);
+const fmtPct = n => n.toFixed(1) + '%';
+const isDark = () => document.documentElement.dataset.theme === 'dark';
+
+function plotlyLayout(extra = {}) {
+  const dark = isDark();
+  return {
+    paper_bgcolor: 'transparent',
+    plot_bgcolor : dark ? '#182234' : '#F5F7FA',
+    font: { family: 'Segoe UI, system-ui, sans-serif', color: dark ? '#C9D6E8' : '#4A5568', size: 11 },
+    margin: { l: 10, r: 10, t: 10, b: 10 },
+    ...extra,
+  };
+}
+
+function getAvanceForYear(rec, anio) {
+  const map = { '2024': rec.avance_2024, '2025': rec.avance_2025, '2026': rec.avance_2026, '2027': rec.avance_2027 };
+  return map[anio] ?? 0;
+}
+function getProgForYear(rec, anio) {
+  return anio === '2024' ? rec.programado_2024 : rec.programado_2025;
+}
+function getMetaForYear(rec, anio) {
+  return anio === '2024' ? rec.meta_2024 : rec.meta_2025;
+}
+function getPlaneadoForYear(rec, anio) {
+  return anio === '2024' ? rec.total_planeado_2024 : rec.total_planeado_2025;
+}
+function getEjecutadoForYear(rec, anio) {
+  return anio === '2024' ? rec.total_ejecutado_2024 : rec.total_ejecutado_2025;
+}
+
+function getQuarterData(rec, anio, trimestre) {
+  const tMap = {
+    '2024': { T1: [rec.t1_plan_2024, rec.t1_ejec_2024], T2: [rec.t2_plan_2024, rec.t2_ejec_2024], T3: [rec.t3_plan_2024, rec.t3_ejec_2024], T4: [rec.t4_plan_2024, rec.t4_ejec_2024] },
+    '2025': { T1: [rec.t1_plan_2025, rec.t1_ejec_2025], T2: [rec.t2_plan_2025, rec.t2_ejec_2025], T3: [rec.t3_plan_2025, rec.t3_ejec_2025], T4: [0,0] },
+  };
+  return tMap[anio]?.[trimestre] ?? [0, 0];
+}
+
+function statusLabel(avance) {
+  if (avance >= 90) return { label: 'Cumplida', cls: 'badge-cumplida' };
+  if (avance >  0)  return { label: 'En Ejecución', cls: 'badge-ejecucion' };
+  return { label: 'Sin Iniciar', cls: 'badge-sininicio' };
+}
+
+// ══════════════════════════════════════════════════════════════
+// INICIALIZACIÓN DE FILTROS
+// ══════════════════════════════════════════════════════════════
+function initFilters() {
+  const secSel = $('fSecretaria');
+  const ejeSel = $('fEje');
+
+  const secs = [...new Set(PLAN_DATA.map(r => r.secretaria))].sort();
+  secs.forEach(s => {
+    const o = document.createElement('option');
+    o.value = s; o.textContent = s;
+    secSel.appendChild(o);
+  });
+
+  const ejeMap = {};
+  PLAN_DATA.forEach(r => { if (r.eje > 0) ejeMap[r.eje] = r.eje_estrategico.replace(/\n/g,' ').substring(0, 55); });
+  Object.keys(ejeMap).sort((a,b)=>a-b).forEach(k => {
+    const o = document.createElement('option');
+    o.value = k; o.textContent = `Eje ${k} – ${ejeMap[k]}`;
+    ejeSel.appendChild(o);
+  });
+
+  ['fAnio','fTrimestre','fSecretaria','fEstado','fEje'].forEach(id => {
+    $(id).addEventListener('change', () => { activeAnio = $('fAnio').value === 'todos' ? '2024' : $('fAnio').value; applyFilters(); });
+  });
+
+  $('resetFilters').addEventListener('click', resetFilters);
+  $('refreshBtn').addEventListener('click', () => applyFilters());
+  $('darkToggle').addEventListener('click', toggleTheme);
+  $('exportPdfBtn').addEventListener('click', exportPDF);
+  $('exportExcelBtn').addEventListener('click', exportExcelFull);
+  $('tblExportCsv').addEventListener('click', exportTableCSV);
+  $('tblExportExcel').addEventListener('click', exportTableExcel);
+  $('tblExportPdf').addEventListener('click', exportTablePDF);
+}
+
+function resetFilters() {
+  $('fAnio').value = '2024'; $('fTrimestre').value = 'todos';
+  $('fSecretaria').value = 'todas'; $('fEstado').value = 'todos';
+  $('fEje').value = 'todos';
+  activeAnio = '2024';
+  applyFilters();
+}
+
+// ══════════════════════════════════════════════════════════════
+// FILTRADO DE DATOS
+// ══════════════════════════════════════════════════════════════
+function applyFilters() {
+  const anio      = $('fAnio').value;
+  const trimestre = $('fTrimestre').value;
+  const secretaria= $('fSecretaria').value;
+  const estado    = $('fEstado').value;
+  const eje       = $('fEje').value;
+
+  // Determine active year for avance display
+  activeAnio = (anio === 'todos') ? '2024' : anio;
+
+  filteredData = PLAN_DATA.filter(r => {
+    if (secretaria !== 'todas' && r.secretaria !== secretaria) return false;
+    if (eje !== 'todos' && String(r.eje) !== String(eje)) return false;
+
+    // For year filter, check if we have data for that year
+    if (anio !== 'todos') {
+      const progKey = anio === '2024' ? r.programado_2024 : r.programado_2025;
+      if (estado !== 'todos' && progKey !== estado) return false;
+    } else {
+      // Check any year's estado
+      if (estado !== 'todos') {
+        const matchAny = [r.programado_2024, r.programado_2025].includes(estado);
+        if (!matchAny) return false;
+      }
+    }
+
+    // Trimestre filter: only meaningful for concrete year
+    if (trimestre !== 'todos' && anio !== 'todos') {
+      const [plan, ejec] = getQuarterData(r, anio, trimestre);
+      if (plan === 0 && ejec === 0) return false;
+    }
+
+    return true;
+  });
+
+  updateKPIs();
+  renderGauge();
+  renderDonut();
+  renderBarrasH();
+  renderLinea();
+  renderApilado();
+  renderTreemap();
+  renderHeatmap();
+  updateTable();
+  updateBadges();
+}
+
+// ══════════════════════════════════════════════════════════════
+// KPIs
+// ══════════════════════════════════════════════════════════════
+function updateKPIs() {
+  const data = filteredData;
+  const total = data.length;
+  const prog = data.filter(r => getProgForYear(r, activeAnio) === 'P').length;
+  const noProg = data.filter(r => getProgForYear(r, activeAnio) === 'NP').length;
+  const avances = data.map(r => getAvanceForYear(r, activeAnio));
+  const cumplidas = avances.filter(a => a >= 90).length;
+  const sinInicio = avances.filter(a => a === 0).length;
+  const enEjecucion = avances.filter(a => a > 0 && a < 90).length;
+  const avgAvance = avances.length ? avances.reduce((a,b) => a+b, 0) / avances.length : 0;
+  const secs = new Set(data.map(r => r.secretaria)).size;
+
+  setKPI('kTotal', total, null);
+  setKPI('kProg', prog, `${((prog/total)*100).toFixed(0)}% del total`);
+  setKPI('kNoProg', noProg, `${((noProg/total)*100).toFixed(0)}% sin programar`);
+  setKPI('kCumplidas', cumplidas, `${((cumplidas/total)*100).toFixed(0)}% cumplimiento`);
+  setKPI('kEjecucion', enEjecucion, `${((enEjecucion/total)*100).toFixed(0)}% en proceso`);
+  setKPI('kAvance', fmtPct(avgAvance), activeAnio);
+  setKPI('kSinInicio', sinInicio, `${((sinInicio/total)*100).toFixed(0)}% no iniciadas`);
+  setKPI('kSecretarias', secs, 'dependencias');
+}
+
+function setKPI(id, val, delta) {
+  const el = $(id);
+  if (el) { el.textContent = val; el.style.opacity=0; requestAnimationFrame(()=>{ el.style.transition='opacity .4s'; el.style.opacity=1; }); }
+  const dEl = $(id+'Delta');
+  if (dEl && delta !== null) dEl.textContent = delta;
+}
+
+// ══════════════════════════════════════════════════════════════
+// GAUGE CHART
+// ══════════════════════════════════════════════════════════════
+function renderGauge() {
+  const avances = filteredData.map(r => getAvanceForYear(r, activeAnio));
+  const avg = avances.length ? avances.reduce((a,b)=>a+b,0)/avances.length : 0;
+
+  const trace = {
+    type: 'indicator', mode: 'gauge+number+delta',
+    value: parseFloat(avg.toFixed(1)),
+    delta: { reference: 50, valueformat: '.1f', suffix:'%' },
+    number: { suffix: '%', font: { size: 32, color: COLORS.blueDark } },
+    gauge: {
+      axis: { range: [0,100], tickcolor: '#8A93A6', tickwidth: 1, tickfont:{size:10} },
+      bar: { color: avg >= 70 ? COLORS.green : avg >= 40 ? COLORS.gold : COLORS.red, thickness: .6 },
+      bgcolor: isDark() ? '#182234' : '#F5F7FA',
+      borderwidth: 0,
+      steps: [
+        { range:[0,30],  color: isDark() ? 'rgba(192,57,43,.15)' : '#FDE8E8' },
+        { range:[30,70], color: isDark() ? 'rgba(212,175,55,.1)' : '#FBF5DC' },
+        { range:[70,100],color: isDark() ? 'rgba(46,139,87,.15)' : '#E6F4EC' },
+      ],
+      threshold: { line:{ color:COLORS.gold, width:3 }, thickness:.75, value:70 },
+    },
+  };
+  Plotly.newPlot('chartGauge', [trace], plotlyLayout({ height:220, margin:{l:20,r:20,t:20,b:10} }), { responsive:true, displayModeBar:false });
+}
+
+// ══════════════════════════════════════════════════════════════
+// DONUT CHART
+// ══════════════════════════════════════════════════════════════
+function renderDonut() {
+  const avances = filteredData.map(r => getAvanceForYear(r, activeAnio));
+  const cumplidas = avances.filter(a => a >= 90).length;
+  const enEjecucion = avances.filter(a => a > 0 && a < 90).length;
+  const sinInicio = avances.filter(a => a === 0).length;
+  const total = filteredData.length;
+  const retrasadas = filteredData.filter(r => getProgForYear(r, activeAnio) === 'P' && getAvanceForYear(r, activeAnio) < 30).length;
+
+  const trace = {
+    type: 'pie', hole: .55,
+    values: [cumplidas, enEjecucion, sinInicio],
+    labels: ['Cumplidas ≥90%', 'En Ejecución', 'Sin Iniciar'],
+    marker: { colors: [COLORS.green, COLORS.blueMid, COLORS.red], line:{ color:isDark()?'#182234':'#fff', width:2 } },
+    textinfo: 'percent',
+    hovertemplate: '<b>%{label}</b><br>%{value} metas (%{percent})<extra></extra>',
+    textfont: { size: 11 },
+  };
+  Plotly.newPlot('chartDonut', [trace], plotlyLayout({
+    height:220, showlegend:true,
+    legend: { orientation:'h', y:-0.2, font:{size:10} },
+    margin:{l:10,r:10,t:10,b:40},
+    annotations: [{ text: `<b>${total}</b><br>Metas`, x:.5, y:.5, xref:'paper', yref:'paper', showarrow:false, font:{size:13, color: isDark()?'#C9D6E8':COLORS.blueDark} }],
+  }), { responsive:true, displayModeBar:false });
+}
+
+// ══════════════════════════════════════════════════════════════
+// BARRAS HORIZONTALES — AVANCE POR SECRETARÍA
+// ══════════════════════════════════════════════════════════════
+function renderBarrasH() {
+  const secMap = {};
+  filteredData.forEach(r => {
+    const s = SEC_ABBR[r.secretaria] || r.secretaria;
+    if (!secMap[s]) secMap[s] = [];
+    secMap[s].push(getAvanceForYear(r, activeAnio));
+  });
+
+  const labels = [], values = [], colors = [];
+  Object.entries(secMap).sort((a,b)=>{
+    const avgA = a[1].reduce((x,y)=>x+y,0)/a[1].length;
+    const avgB = b[1].reduce((x,y)=>x+y,0)/b[1].length;
+    return avgA - avgB;
+  }).forEach(([sec, avs], i) => {
+    const avg = avs.reduce((a,b)=>a+b,0)/avs.length;
+    labels.push(sec);
+    values.push(parseFloat(avg.toFixed(1)));
+    colors.push(avg>=70 ? COLORS.green : avg>=40 ? COLORS.gold : COLORS.red);
+  });
+
+  const trace = {
+    type: 'bar', orientation:'h',
+    x: values, y: labels,
+    marker: { color: colors, line:{ color:'transparent' } },
+    text: values.map(v => v.toFixed(1)+'%'),
+    textposition: 'outside', cliponaxis: false,
+    hovertemplate: '<b>%{y}</b><br>Avance: %{x:.1f}%<extra></extra>',
+  };
+  Plotly.newPlot('chartBarrasH', [trace], plotlyLayout({
+    height: Math.max(220, labels.length * 40),
+    xaxis: { range:[0,110], ticksuffix:'%', gridcolor: isDark()?'#253550':'#DDE3EC', showgrid:true },
+    yaxis: { automargin:true, tickfont:{size:11} },
+    margin: { l:10, r:60, t:10, b:30 },
+    shapes: [{ type:'line', x0:70, x1:70, y0:-0.5, y1:labels.length-0.5, line:{color:COLORS.gold,width:2,dash:'dot'} }],
+  }), { responsive:true, displayModeBar:false });
+}
+
+// ══════════════════════════════════════════════════════════════
+// LÍNEA TEMPORAL — EVOLUCIÓN TRIMESTRAL
+// ══════════════════════════════════════════════════════════════
+function renderLinea() {
+  const years = ['2024','2025'];
+  const trimestres = ['T1','T2','T3','T4'];
+  const xLabels = ['T1-24','T2-24','T3-24','T4-24','T1-25','T2-25','T3-25','T4-25'];
+
+  // Compute average avance per trimestre per año from all data
+  const getAvgTrimestre = (anio, trim) => {
+    const data = PLAN_DATA.filter(r => {
+      const secF = $('fSecretaria').value;
+      const ejeF = $('fEje').value;
+      if (secF !== 'todas' && r.secretaria !== secF) return false;
+      if (ejeF !== 'todos' && String(r.eje) !== String(ejeF)) return false;
+      return true;
+    });
+    const vals = data.map(r => {
+      const [plan, ejec] = getQuarterData(r, anio, trim);
+      if (plan === 0) return null;
+      return Math.min((ejec/plan)*100, 100);
+    }).filter(v => v !== null);
+    return vals.length ? vals.reduce((a,b)=>a+b,0)/vals.length : 0;
+  };
+
+  const yValues = years.flatMap(a => trimestres.map(t => parseFloat(getAvgTrimestre(a,t).toFixed(1))));
+
+  const trace = {
+    type:'scatter', mode:'lines+markers',
+    x: xLabels, y: yValues,
+    line: { color: COLORS.blueMid, width:3, shape:'spline' },
+    marker: { size:8, color: yValues.map(v => v>=70?COLORS.green:v>0?COLORS.gold:COLORS.red), line:{color:'#fff',width:2} },
+    fill:'tozeroy', fillcolor: isDark() ? 'rgba(26,111,181,.12)' : 'rgba(26,111,181,.08)',
+    hovertemplate: '<b>%{x}</b><br>Avance promedio: %{y:.1f}%<extra></extra>',
+  };
+
+  const refLine = { type:'scatter', mode:'lines', x:xLabels, y:xLabels.map(()=>70),
+    line:{color:COLORS.gold,width:2,dash:'dot'}, name:'Meta 70%', hoverinfo:'none', showlegend:true };
+
+  Plotly.newPlot('chartLinea', [trace, refLine], plotlyLayout({
+    height:260,
+    xaxis: { gridcolor: isDark()?'#253550':'#DDE3EC', showgrid:true },
+    yaxis: { range:[0,105], ticksuffix:'%', gridcolor: isDark()?'#253550':'#DDE3EC', showgrid:true },
+    margin:{l:40,r:20,t:10,b:40},
+    showlegend:true,
+    legend:{ orientation:'h', y:-0.25, font:{size:10} },
+  }), { responsive:true, displayModeBar:false });
+}
+
+// ══════════════════════════════════════════════════════════════
+// BARRAS APILADAS — PROGRAMADAS VS NO PROGRAMADAS
+// ══════════════════════════════════════════════════════════════
+function renderApilado() {
+  const secMap = {};
+  filteredData.forEach(r => {
+    const s = SEC_ABBR[r.secretaria] || r.secretaria;
+    if (!secMap[s]) secMap[s] = { P:0, NP:0 };
+    const prog = getProgForYear(r, activeAnio);
+    if (prog === 'P') secMap[s].P++;
+    else secMap[s].NP++;
+  });
+
+  const labels = Object.keys(secMap);
+  const trP = {
+    type:'bar', name:'Programadas',
+    x: labels, y: labels.map(s => secMap[s].P),
+    marker:{ color: COLORS.green },
+    hovertemplate:'<b>%{x}</b><br>Programadas: %{y}<extra></extra>',
+  };
+  const trNP = {
+    type:'bar', name:'No Programadas',
+    x: labels, y: labels.map(s => secMap[s].NP),
+    marker:{ color: COLORS.gold },
+    hovertemplate:'<b>%{x}</b><br>No Programadas: %{y}<extra></extra>',
+  };
+
+  Plotly.newPlot('chartApilado', [trP, trNP], plotlyLayout({
+    barmode:'stack', height:260,
+    xaxis: { tickangle:-25, automargin:true, tickfont:{size:10} },
+    yaxis: { gridcolor: isDark()?'#253550':'#DDE3EC' },
+    margin:{ l:40, r:10, t:10, b:80 },
+    showlegend:true,
+    legend:{ orientation:'h', y:-0.45, font:{size:10} },
+  }), { responsive:true, displayModeBar:false });
+}
+
+// ══════════════════════════════════════════════════════════════
+// TREEMAP — POR EJE ESTRATÉGICO Y SECRETARÍA
+// ══════════════════════════════════════════════════════════════
+function renderTreemap() {
+  const ejeLabel = n => {
+    const labels = {1:'Seguridad',2:'Des. Social',3:'Deporte',4:'Ambiente',5:'Prosperidad',6:'Planificación',7:'Agropecuario',8:'Gestión Riesgo',9:'Transparencia'};
+    return labels[n] || `Eje ${n}`;
+  };
+
+  const ids=[], labels=[], parents=[], values=[], colors=[];
+  ids.push('root'); labels.push('Gachancipá'); parents.push(''); values.push(0); colors.push(COLORS.blueDark);
+
+  const ejeMap = {};
+  filteredData.forEach(r => {
+    if (!ejeMap[r.eje]) ejeMap[r.eje] = {};
+    const s = SEC_ABBR[r.secretaria] || r.secretaria;
+    ejeMap[r.eje][s] = (ejeMap[r.eje][s] || 0) + 1;
+  });
+
+  let ei = 0;
+  Object.entries(ejeMap).sort((a,b)=>a[0]-b[0]).forEach(([eje, secs]) => {
+    const ejeId = `eje_${eje}`;
+    const total = Object.values(secs).reduce((a,b)=>a+b,0);
+    ids.push(ejeId); labels.push(`Eje ${eje}: ${ejeLabel(+eje)}`);
+    parents.push('root'); values.push(total); colors.push(SEC_COLORS[ei % SEC_COLORS.length]);
+    Object.entries(secs).forEach(([sec, cnt]) => {
+      ids.push(`${ejeId}_${sec}`); labels.push(sec);
+      parents.push(ejeId); values.push(cnt); colors.push(SEC_COLORS[ei % SEC_COLORS.length]+'CC');
+    });
+    ei++;
+  });
+
+  const trace = {
+    type:'treemap', ids, labels, parents, values,
+    marker:{ colors, colorscale:null, line:{width:.5, color:'#fff'} },
+    textinfo:'label+value',
+    hovertemplate:'<b>%{label}</b><br>%{value} metas<extra></extra>',
+    textfont:{ size:11 },
+  };
+  Plotly.newPlot('chartTreemap',[trace],plotlyLayout({height:300,margin:{l:5,r:5,t:5,b:5}}),{responsive:true,displayModeBar:false});
+}
+
+// ══════════════════════════════════════════════════════════════
+// HEATMAP — CUMPLIMIENTO POR SECRETARÍA Y TRIMESTRE
+// ══════════════════════════════════════════════════════════════
+function renderHeatmap() {
+  const secs = [...new Set(filteredData.map(r => SEC_ABBR[r.secretaria] || r.secretaria))].sort();
+  const xLabels = ['T1-24','T2-24','T3-24','T4-24','T1-25','T2-25','T3-25','T4-25'];
+  const combos = [['2024','T1'],['2024','T2'],['2024','T3'],['2024','T4'],['2025','T1'],['2025','T2'],['2025','T3'],['2025','T4']];
+
+  const z = secs.map(sec => {
+    return combos.map(([anio, trim]) => {
+      const recs = filteredData.filter(r => (SEC_ABBR[r.secretaria]||r.secretaria) === sec);
+      const vals = recs.map(r => {
+        const [plan, ejec] = getQuarterData(r, anio, trim);
+        if (plan === 0) return null;
+        return Math.min((ejec/plan)*100, 100);
+      }).filter(v => v !== null);
+      return vals.length ? parseFloat((vals.reduce((a,b)=>a+b,0)/vals.length).toFixed(1)) : null;
+    });
+  });
+
+  const trace = {
+    type:'heatmap', z, x:xLabels, y:secs,
+    colorscale:[[0,'#C0392B'],[0.4,'#D4AF37'],[0.7,'#F4D03F'],[1,'#2E8B57']],
+    zmin:0, zmax:100,
+    text: z.map(row => row.map(v => v !== null ? v.toFixed(1)+'%' : 'N/D')),
+    hovertemplate:'<b>%{y} — %{x}</b><br>Avance: %{text}<extra></extra>',
+    showscale:true,
+    colorbar:{ thickness:12, len:.8, ticksuffix:'%', outlinecolor:'transparent', tickfont:{size:10} },
+  };
+  Plotly.newPlot('chartHeatmap',[trace],plotlyLayout({
+    height:300,
+    xaxis:{ side:'bottom', automargin:true, tickfont:{size:10} },
+    yaxis:{ automargin:true, tickfont:{size:10} },
+    margin:{l:10,r:60,t:10,b:40},
+  }),{responsive:true,displayModeBar:false});
+}
+
+// ══════════════════════════════════════════════════════════════
+// TABLA EJECUTIVA — DATATABLES
+// ══════════════════════════════════════════════════════════════
+function buildTableRows(data) {
+  return data.map(r => {
+    const av = getAvanceForYear(r, activeAnio);
+    const prog = getProgForYear(r, activeAnio);
+    const meta = getMetaForYear(r, activeAnio);
+    const plan = getPlaneadoForYear(r, activeAnio);
+    const ejec = getEjecutadoForYear(r, activeAnio);
+    const st = statusLabel(av);
+    const pctColor = av>=70?'#2E8B57':av>=30?'#D4AF37':'#C0392B';
+    const progBadge = prog==='P'
+      ? `<span class="badge-prog">Programada</span>`
+      : `<span class="badge-noprog">No Programada</span>`;
+    const stBadge = `<span class="${st.cls}">${st.label}</span>`;
+    const bar = `<div>${av.toFixed(1)}%<div class="progress-mini"><div class="progress-mini-fill" style="width:${av}%;background:${pctColor}"></div></div></div>`;
+
+    return [
+      `<span class="fw-bold text-muted">${r.eje}</span>`,
+      `<small>${r.secretaria.replace('Secretaría de ','Sec. ')}</small>`,
+      `<small>${(r.programa||'').replace(/\n/g,' ').substring(0,60)}</small>`,
+      `<small>${(r.producto||'').substring(0,55)}</small>`,
+      `<small>${(meta||'').replace(/\n/g,' ').substring(0,65)}</small>`,
+      activeAnio,
+      stBadge,
+      fmt1(plan),
+      fmt1(ejec),
+      bar,
+      progBadge,
+      `<small style="color:var(--gray-muted)">${(r.logros||'').substring(0,80)}</small>`,
+    ];
+  });
+}
+
+function updateTable() {
+  if (dataTable) {
+    dataTable.clear();
+    dataTable.rows.add(buildTableRows(filteredData));
+    dataTable.draw();
+    return;
+  }
+
+  const tbody = $('tablaBody');
+  buildTableRows(filteredData).forEach(row => {
+    const tr = document.createElement('tr');
+    row.forEach(cell => {
+      const td = document.createElement('td');
+      td.innerHTML = cell;
+      tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });
+
+  dataTable = $('#tablaEjecutiva').DataTable({
+    language: {
+      url: null,
+      search:'Buscar:', lengthMenu:'Mostrar _MENU_ filas',
+      info:'Mostrando _START_–_END_ de _TOTAL_ metas',
+      paginate:{ previous:'‹', next:'›' },
+      zeroRecords:'Sin resultados', infoEmpty:'', infoFiltered:'(filtrado de _MAX_)',
+    },
+    pageLength: 15,
+    order:[[9,'desc']],
+    scrollX: false,
+    columnDefs:[
+      { targets:[4,5,11], orderable:false },
+      { targets:[7,8], className:'text-end' },
+    ],
+  });
+}
+
+// ══════════════════════════════════════════════════════════════
+// ACTUALIZAR BADGES DE VIGENCIA
+// ══════════════════════════════════════════════════════════════
+function updateBadges() {
+  ['gaugeBadge','donutBadge','barrasHBadge'].forEach(id => {
+    const el = $(id);
+    if (el) el.textContent = activeAnio;
+  });
+}
+
+// ══════════════════════════════════════════════════════════════
+// TEMA OSCURO
+// ══════════════════════════════════════════════════════════════
+function toggleTheme() {
+  const html = document.documentElement;
+  const isDarkNow = html.dataset.theme === 'dark';
+  html.dataset.theme = isDarkNow ? 'light' : 'dark';
+  const btn = $('darkToggle');
+  btn.innerHTML = isDarkNow
+    ? '<i class="bi bi-moon-stars-fill"></i>'
+    : '<i class="bi bi-sun-fill"></i>';
+  // Re-render all charts
+  renderGauge(); renderDonut(); renderBarrasH();
+  renderLinea(); renderApilado(); renderTreemap(); renderHeatmap();
+}
+
+// ══════════════════════════════════════════════════════════════
+// EXPORTACIONES
+// ══════════════════════════════════════════════════════════════
+async function exportPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation:'landscape', unit:'mm', format:'a4' });
+  const W = doc.internal.pageSize.getWidth();
+
+  // Portada
+  doc.setFillColor(11,60,93);
+  doc.rect(0,0,W,40,'F');
+  doc.setTextColor(212,175,55);
+  doc.setFontSize(16);
+  doc.text('MUNICIPIO DE GACHANCIPÁ — CUNDINAMARCA', W/2, 15, {align:'center'});
+  doc.setTextColor(255,255,255);
+  doc.setFontSize(12);
+  doc.text('Plan de Desarrollo: MI COMPROMISO ES GACHANCIPÁ 2024–2027', W/2, 25, {align:'center'});
+  doc.setFontSize(9);
+  doc.text(`Informe de Seguimiento al Plan Indicativo · Vigencia ${activeAnio} · Generado: ${new Date().toLocaleDateString('es-CO')}`, W/2, 33, {align:'center'});
+
+  // KPIs
+  doc.setTextColor(11,60,93);
+  doc.setFontSize(11);
+  doc.text('INDICADORES CLAVE DE DESEMPEÑO', 14, 52);
+  doc.setDrawColor(212,175,55); doc.setLineWidth(.5); doc.line(14,54,W-14,54);
+
+  const kpis = [
+    ['Total Metas', $('kTotal').textContent],
+    ['Programadas', $('kProg').textContent],
+    ['No Programadas', $('kNoProg').textContent],
+    ['Cumplidas ≥90%', $('kCumplidas').textContent],
+    ['En Ejecución', $('kEjecucion').textContent],
+    ['Avance General', $('kAvance').textContent],
+    ['Sin Iniciar', $('kSinInicio').textContent],
+    ['Secretarías', $('kSecretarias').textContent],
+  ];
+  doc.setFontSize(9);
+  kpis.forEach(([label,val],i) => {
+    const x = 14 + (i%4)*68, y = 65 + Math.floor(i/4)*16;
+    doc.setFillColor(245,247,250);
+    doc.roundedRect(x,y-6,64,14,2,2,'F');
+    doc.setTextColor(138,147,166); doc.text(label, x+3, y);
+    doc.setTextColor(11,60,93); doc.setFontSize(13);
+    doc.text(String(val), x+3, y+7);
+    doc.setFontSize(9);
+  });
+
+  // Capturas gráficos
+  const charts = ['chartGauge','chartDonut','chartBarrasH','chartLinea'];
+  doc.addPage();
+  doc.setFillColor(11,60,93); doc.rect(0,0,W,12,'F');
+  doc.setTextColor(212,175,55); doc.setFontSize(11);
+  doc.text('VISUALIZACIONES ESTRATÉGICAS', W/2, 8, {align:'center'});
+
+  let yPos = 20;
+  for (const id of charts) {
+    const el = document.getElementById(id);
+    if (!el) continue;
+    try {
+      const canvas = await html2canvas(el, {backgroundColor:null,scale:1.5});
+      const imgData = canvas.toDataURL('image/png');
+      const maxW = (W-28)/2, maxH = 60;
+      const xPos = charts.indexOf(id) % 2 === 0 ? 14 : 14+maxW+4;
+      if (charts.indexOf(id) % 2 === 0 && charts.indexOf(id) > 0) yPos += maxH+6;
+      doc.addImage(imgData,'PNG',xPos,yPos,maxW,maxH);
+    } catch(e){}
+  }
+
+  // Footer
+  const pageCount = doc.getNumberOfPages();
+  for (let i=1;i<=pageCount;i++) {
+    doc.setPage(i);
+    doc.setFillColor(11,60,93);
+    doc.rect(0,doc.internal.pageSize.getHeight()-10,W,10,'F');
+    doc.setTextColor(255,255,255); doc.setFontSize(7);
+    doc.text(`Plan de Desarrollo Gachancipá 2024-2027 · PSP-130-2026 · Pág. ${i}/${pageCount}`, W/2, doc.internal.pageSize.getHeight()-3, {align:'center'});
+  }
+
+  doc.save(`Informe_PDM_Gachancipa_${activeAnio}.pdf`);
+}
+
+function exportExcelFull() {
+  const wb = XLSX.utils.book_new();
+  const headers = ['Eje','Secretaría','Programa','Producto','Meta','Vigencia','Planeado','Ejecutado','% Avance','Clasificación','Logros'];
+  const rows = filteredData.map(r => [
+    r.eje, r.secretaria,
+    (r.programa||'').replace(/\n/g,' '),
+    r.producto,
+    getMetaForYear(r,activeAnio),
+    activeAnio,
+    getPlaneadoForYear(r,activeAnio),
+    getEjecutadoForYear(r,activeAnio),
+    getAvanceForYear(r,activeAnio),
+    getProgForYear(r,activeAnio)==='P'?'Programada':'No Programada',
+    r.logros,
+  ]);
+  const ws = XLSX.utils.aoa_to_sheet([headers,...rows]);
+  ws['!cols'] = [4,25,30,25,40,8,10,10,10,15,40].map(w=>({wch:w}));
+  XLSX.utils.book_append_sheet(wb, ws, `PDM ${activeAnio}`);
+  XLSX.writeFile(wb, `PDM_Gachancipa_${activeAnio}.xlsx`);
+}
+
+function exportTableCSV() {
+  const headers = ['Eje','Secretaría','Programa','Producto','Meta','Vigencia','Planeado','Ejecutado','% Avance','Clasificación'];
+  const rows = filteredData.map(r => [
+    r.eje, `"${r.secretaria}"`,
+    `"${(r.programa||'').replace(/\n/g,' ').replace(/"/g,'')}"`,
+    `"${(r.producto||'').replace(/"/g,'')}"`,
+    `"${(getMetaForYear(r,activeAnio)||'').replace(/\n/g,' ').replace(/"/g,'')}"`,
+    activeAnio,
+    getPlaneadoForYear(r,activeAnio),
+    getEjecutadoForYear(r,activeAnio),
+    getAvanceForYear(r,activeAnio),
+    getProgForYear(r,activeAnio)==='P'?'Programada':'No Programada',
+  ].join(','));
+  const csv = [headers.join(','), ...rows].join('\n');
+  const blob = new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'});
+  const a = document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download=`PDM_Gachancipa_${activeAnio}.csv`; a.click();
+}
+
+function exportTableExcel() { exportExcelFull(); }
+
+async function exportTablePDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation:'landscape', unit:'mm', format:'a4' });
+  const W = doc.internal.pageSize.getWidth();
+
+  doc.setFillColor(11,60,93); doc.rect(0,0,W,14,'F');
+  doc.setTextColor(212,175,55); doc.setFontSize(11);
+  doc.text('Plan de Desarrollo Gachancipá · Tabla Ejecutiva de Metas · '+activeAnio, W/2, 9, {align:'center'});
+
+  const headers = ['Eje','Secretaría','Meta','Vigencia','Plan.','Ejec.','% Av.','Clasif.'];
+  const rows = filteredData.map(r => [
+    String(r.eje),
+    (SEC_ABBR[r.secretaria]||r.secretaria),
+    (getMetaForYear(r,activeAnio)||'').replace(/\n/g,' ').substring(0,55),
+    activeAnio,
+    String(fmt1(getPlaneadoForYear(r,activeAnio))),
+    String(fmt1(getEjecutadoForYear(r,activeAnio))),
+    fmtPct(getAvanceForYear(r,activeAnio)),
+    getProgForYear(r,activeAnio)==='P'?'Prog':'No Prog',
+  ]);
+
+  // Manual table rendering
+  let y=22, rowH=8;
+  const colWidths=[10,28,90,14,14,14,16,16];
+  const totalW=colWidths.reduce((a,b)=>a+b,0);
+  let x=14;
+
+  doc.setFillColor(26,111,181);
+  doc.rect(x,y-5,totalW,rowH,'F');
+  doc.setTextColor(255,255,255); doc.setFontSize(7.5);
+  let cx=x;
+  headers.forEach((h,i)=>{ doc.text(h,cx+1,y); cx+=colWidths[i]; });
+  y+=rowH;
+
+  rows.forEach((row,ri)=>{
+    if(y>190){ doc.addPage(); y=14; }
+    doc.setFillColor(ri%2===0?245:255,ri%2===0?247:255,ri%2===0?250:255);
+    doc.rect(x,y-5,totalW,rowH,'F');
+    doc.setTextColor(74,85,104); doc.setFontSize(7);
+    cx=x;
+    row.forEach((cell,i)=>{
+      const txt=doc.splitTextToSize(String(cell),colWidths[i]-2);
+      doc.text(txt[0],cx+1,y);
+      cx+=colWidths[i];
+    });
+    y+=rowH;
+  });
+
+  doc.setFillColor(11,60,93); doc.rect(0,198,W,8,'F');
+  doc.setTextColor(255,255,255); doc.setFontSize(7);
+  doc.text(`Municipio de Gachancipá · Plan de Desarrollo 2024-2027 · Generado: ${new Date().toLocaleDateString('es-CO')}`, W/2, 203, {align:'center'});
+
+  doc.save(`Tabla_PDM_Gachancipa_${activeAnio}.pdf`);
+}
+
+// ══════════════════════════════════════════════════════════════
+// BOOTSTRAP: INICIALIZACIÓN
+// ══════════════════════════════════════════════════════════════
+window.addEventListener('DOMContentLoaded', () => {
+  initFilters();
+  activeAnio = '2024';
+  filteredData = PLAN_DATA.slice();
+  applyFilters();
+
+  // Ocultar loader
+  setTimeout(() => { // loader timeout
+    const loader = $('loader');
+    loader.classList.add('hidden');
+    setTimeout(() => loader.style.display='none', 500);
+  }, 1800);
+});
+
+</script>
+</body>
+</html>
